@@ -17,4 +17,5 @@
     <string name="enter_new_password">Enter New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="save_changes">Save Changes</string>
+    <string name="welcome_back_admin">Welcome Back, Admin</string>
 </resources>

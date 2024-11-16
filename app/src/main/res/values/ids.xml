@@ -5,4 +5,8 @@
     <item name="username_label" type="id">username_label</item>
     <item name="etPassword" type="id">etPassword</item>
     <item name="btnSignIn" type="id">btnSignIn</item>
+    <item name="llWelcomeContainer" type="id">welcomeContainer</item>
+    <item name="tvWelcome" type="id" />
+    <item name="tvBackToLogin" type="id">back_to_login</item>
+    <item name="llDashboardOverview" type="id">dashboard_overview</item>
 </resources>
