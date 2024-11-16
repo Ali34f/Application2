@@ -11,14 +11,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="UselessParent">
 
         <!-- Illustration Image -->
         <ImageView
             android:layout_width="250dp"
             android:layout_height="180dp"
             android:src="@drawable/man"
-            android:contentDescription="Login Illustration"
+            android:contentDescription="@string/login_illustration"
             android:layout_gravity="center"
             android:layout_marginBottom="24dp" />
 
@@ -26,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HRAdminPro"
+            android:text="@string/hradminpro"
             android:textColor="@android:color/black"
             android:textSize="40sp"
             android:textStyle="bold"
@@ -38,7 +39,7 @@
             android:id="@+id/username_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Username"
+            android:text="@string/username"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -50,17 +51,21 @@
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter username"
+            android:layout_marginBottom="16dp"
+            android:autofillHints="username"
             android:background="@drawable/rounded_edittext"
+            android:hint="@string/enter_username"
+            android:inputType="text"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:textColorHint="#757575"
+            tools:ignore="TextContrastCheck" />
 
-        <!-- Password Label (aligned to left) -->
+        <!-- Password Label -->
         <TextView
             android:id="@+id/password_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password"
+            android:text="@string/password"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -72,17 +77,19 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Password"
+            android:layout_marginBottom="8dp"
+            android:autofillHints="password"
             android:background="@drawable/rounded_edittext"
-            android:padding="12dp"
+            android:hint="@string/enter_password"
             android:inputType="textPassword"
-            android:layout_marginBottom="8dp" />
+            android:padding="12dp"
+            tools:ignore="VisualLintTextFieldSize,TextContrastCheck" />
 
         <!-- Forgot Password Text -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot Password?"
+            android:text="@string/forgot_password"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:gravity="end"
@@ -95,14 +102,15 @@
             android:id="@+id/btnSignIn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FFA500"
+            android:padding="12dp"
+            android:text="@string/sign_in"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:backgroundTint="#FFA500"
-            android:textColor="@android:color/white"
-            android:textAllCaps="false"
-            android:layout_marginBottom="16dp"
-            android:padding="12dp" />
+            tools:ignore="VisualLintButtonSize,TextContrastCheck" />
 
         <!-- Divider Line with Text "Or continue with" -->
         <LinearLayout
@@ -123,7 +131,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Or continue with"
+                android:text="@string/or_continue_with"
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 android:paddingStart="8dp"
@@ -153,13 +161,14 @@
         <ImageView
             android:layout_width="24dp"
             android:layout_height="24dp"
+            android:contentDescription="@string/todo"
             android:src="@drawable/google_ic"
             android:layout_marginEnd="8dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Google"
+            android:text="@string/google"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="bold"

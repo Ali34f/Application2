@@ -5,5 +5,5 @@
     <color name="orange_button">#FFA500</color>
     <color name="light_gray">#EAEAEA</color>
     <color name="darker_gray">#707070</color>
-
+    <color name="gray">#333333</color>
 </resources>

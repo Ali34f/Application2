@@ -2,4 +2,7 @@
 <resources>
     <item name="password_label" type="id">password</item>
     <item name="etUsername" type="id">etUsername</item>
+    <item name="username_label" type="id">username_label</item>
+    <item name="etPassword" type="id">etPassword</item>
+    <item name="btnSignIn" type="id">btnSignIn</item>
 </resources>
