@@ -9,4 +9,7 @@
     <item name="tvWelcome" type="id" />
     <item name="tvBackToLogin" type="id">back_to_login</item>
     <item name="llDashboardOverview" type="id">dashboard_overview</item>
+    <item name="btnBack" type="id">btn_back</item>
+    <item name="headerLayout" type="id">header_layout</item>
+    <item name="titleBelowBack" type="id">below_back</item>
 </resources>

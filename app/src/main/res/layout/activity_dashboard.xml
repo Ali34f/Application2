@@ -27,6 +27,7 @@
             android:textColor="@android:color/black" />
     </LinearLayout>
 
+
     <!-- Dashboard Overview  -->
     <LinearLayout
         android:id="@+id/llDashboardOverview"
@@ -44,7 +45,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dashboard Overview:"
+            android:text="@string/dashboard_overview"
             android:textSize="18sp"
             android:textStyle="bold"
             android:layout_marginBottom="16dp"
@@ -54,6 +55,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -68,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total Employees"
+                    android:text="@string/total_employees"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -78,11 +80,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="150"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/darker_gray" />
+                    android:text="@string/_150"
+                    android:textColor="#757575"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Pending Requests -->
@@ -96,7 +98,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pending Requests"
+                    android:text="@string/pending_requests"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:gravity="center"
@@ -106,11 +108,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="5"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     android:gravity="center"
-                    android:textColor="@android:color/darker_gray" />
+                    android:text="@string/_5"
+                    android:textColor="#757575"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -123,8 +125,8 @@
         android:layout_below="@id/llDashboardOverview"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:text="Back to Login"
-        android:textSize="16sp"
+        android:text="@string/back_to_login"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
         android:layout_marginBottom="30dp"
@@ -153,15 +155,16 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_management"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Employee Management Icon" />
+                android:contentDescription="@string/employee_management_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Employee Management"
-                android:textColor="@android:color/white"
+                android:text="@string/employee_management"
+                android:textColor="@color/pure_white"
                 android:textStyle="bold"
                 android:textSize="20sp" />
+
         </LinearLayout>
 
         <!-- Holiday Request Button -->
@@ -179,12 +182,12 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_holiday_request"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Holiday Requests Icon" />
+                android:contentDescription="@string/holiday_requests_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Holiday Requests"
+                android:text="@string/holiday_requests"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="20sp" />
@@ -205,12 +208,12 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_notifications"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Notifications Icon" />
+                android:contentDescription="@string/notifications_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notifications"
+                android:text="@string/notifications"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:textSize="20sp" />
@@ -231,13 +234,13 @@
                 android:layout_height="45dp"
                 android:src="@drawable/ic_settings"
                 android:layout_marginEnd="8dp"
-                android:contentDescription="Settings Icon" />
+                android:contentDescription="@string/settings_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="@android:color/white"
+                android:text="@string/settings"
+                android:textColor="@color/pure_white"
                 android:textStyle="bold"
                 android:textSize="20sp" />
         </LinearLayout>
@@ -249,6 +252,7 @@
         android:layout_height="125dp"
         android:layout_alignParentBottom="true"
         android:background="#D3D3D3"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:gravity="center">
 
@@ -257,19 +261,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_add"
-                android:contentDescription="Quick Add Icon" />
+                android:contentDescription="@string/quick_add_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quick Add"
-                android:textSize="12sp"
+                android:text="@string/quick_add"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -278,19 +283,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            tools:ignore="UseCompoundDrawables">
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:src="@drawable/ic_menu"
-                android:contentDescription="View All Icon" />
+                android:contentDescription="@string/view_all_icon" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="View All"
-                android:textSize="12sp"
+                android:text="@string/view_all"
+                android:textSize="16sp"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
