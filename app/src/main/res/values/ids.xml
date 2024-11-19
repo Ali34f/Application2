@@ -12,4 +12,7 @@
     <item name="btnBack" type="id">btn_back</item>
     <item name="headerLayout" type="id">header_layout</item>
     <item name="titleBelowBack" type="id">below_back</item>
+    <item name="contentSection" type="id">id_content_section</item>
+    <item name="btnConfirm" type="id">id_confirm</item>
+    <item name="btnDone" type="id">id_done_button</item>
 </resources>

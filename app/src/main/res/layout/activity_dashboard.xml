@@ -132,7 +132,7 @@
         android:layout_marginBottom="30dp"
         />
 
-    <!-- Orange Buttons with Icons -->
+    <!-- Actionable Buttons -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -143,6 +143,7 @@
 
         <!-- Employee Management Button -->
         <LinearLayout
+            android:id="@+id/btnEmployeeManagement"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:orientation="horizontal"
@@ -170,6 +171,7 @@
         <!-- Holiday Request Button -->
 
         <LinearLayout
+            android:id="@+id/btnHolidayRequests"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:orientation="horizontal"
@@ -196,6 +198,7 @@
         <!-- Notifications Button -->
 
         <LinearLayout
+            android:id="@+id/btnNotifications"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:orientation="horizontal"
@@ -222,6 +225,7 @@
         <!-- Settings Button -->
 
         <LinearLayout
+            android:id="@+id/btnSettings"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:orientation="horizontal"
