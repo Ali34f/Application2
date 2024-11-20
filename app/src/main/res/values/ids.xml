@@ -15,4 +15,12 @@
     <item name="contentSection" type="id">id_content_section</item>
     <item name="btnConfirm" type="id">id_confirm</item>
     <item name="btnDone" type="id">id_done_button</item>
+    <item name="btnAddEmployee" type="id">btn_add_employee</item>
+    <item name="btnSortFilter" type="id">btn_sort_filter</item>
+    <item name="searchBarLayout" type="id">btn_search_bar</item>
+    <item name="etSearchEmployee" type="id">id_search_employee</item>
+    <item name="tvEmployeeName" type="id">id_employee_name</item>
+    <item name="tvEmployeePosition" type="id">id_employee_position</item>
+    <item name="btnViewEmployee" type="id">id_view_employee</item>
+    <item name="buttonRowLayout" type="id">id_btn_layout</item>
 </resources>

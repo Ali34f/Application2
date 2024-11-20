@@ -47,4 +47,8 @@
     <string name="language">Language</string>
     <string name="manage_notifications">Manage Notifications</string>
     <string name="push">Push</string>
+    <string name="add_employee">Add Employee</string>
+    <string name="sort_filter">Sort/Filter</string>
+    <string name="search_icon">Search Icon</string>
+    <string name="search_employee">Search Employee</string>
 </resources>

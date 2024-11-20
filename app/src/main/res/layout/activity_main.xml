@@ -18,8 +18,8 @@
         <!-- Illustration Image -->
         <ImageView
             android:id="@+id/imageIllustration"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="300dp"
+            android:layout_height="250dp"
             android:src="@drawable/home"
             android:layout_marginBottom="24dp"
             android:contentDescription="@string/group_image" />

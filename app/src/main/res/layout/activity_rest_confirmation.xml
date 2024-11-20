@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333"
+    tools:context=".RestConfirmActivity">
+
+    <!-- Centered Dialog Box -->
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_black_box"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp"
+        android:elevation="10dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Password Rest Successful"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Success Icon -->
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_tick"
+            android:layout_marginBottom="16dp"
+            app:tint="#00FF00" />
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your password has been successfully reset. You can now use your new password to log in to the system. ."
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:paddingHorizontal="16dp"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Done Button -->
+        <Button
+            android:id="@+id/btnDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_blue_button"
+            android:text="Done"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:paddingHorizontal="32dp"
+            android:paddingVertical="8dp" />
+    </LinearLayout>
+</RelativeLayout>
