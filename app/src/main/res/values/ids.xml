@@ -23,4 +23,25 @@
     <item name="tvEmployeePosition" type="id">id_employee_position</item>
     <item name="btnViewEmployee" type="id">id_view_employee</item>
     <item name="buttonRowLayout" type="id">id_btn_layout</item>
+    <item name="headerImage" type="id">header_image</item>
+    <item name="pageTitle" type="id">page_title</item>
+    <item name="reasonForLeaveHeader" type="id">reason_for_leave</item>
+    <item name="etReasonForLeave" type="id">reason_for_leave_box</item>
+    <item name="startDateHeader" type="id">start_date_header</item>
+    <item name="etStartDate" type="id">start_date_box</item>
+    <item name="etEndDate" type="id">end_date_box</item>
+    <item name="additionalCommentsHeader" type="id">additional_comments</item>
+    <item name="endDateHeader" type="id">end_date</item>
+    <item name="etAdditionalComments" type="id">addtional_comments_box</item>
+    <item name="btnSubmitRequest" type="id">btn_submit</item>
+    <item name="btnBack2" type="id">btn_back2</item>
+    <item name="welcomeMessage" type="id">welcome_message</item>
+    <item name="upcomingHolidaySection" type="id">upcoming_holidays</item>
+    <item name="holidayImage" type="id">holiday_image</item>
+    <item name="upcomingHolidayTitle" type="id">upcoming_holiday_title</item>
+    <item name="holidayDetails" type="id">holiday_details</item>
+    <item name="backToLogin" type="id">back_to_login</item>
+    <item name="buttonSection" type="id">button_section</item>
+    <item name="btnProfile" type="id">btn_profile</item>
+    <item name="btnRequestHoliday" type="id">btn_request</item>
 </resources>
