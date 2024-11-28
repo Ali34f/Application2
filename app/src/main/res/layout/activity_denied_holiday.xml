@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
-    tools:context=".NewEmployeeConfirmActivity">
+    android:background="#333333">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,42 +15,46 @@
         android:layout_margin="16dp"
         android:gravity="center">
 
-
-    <!-- Title -->
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_employee_added"
+            android:text="Holiday Request Reviewed "
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp" />
 
-        <!-- Success Icon -->
+        <!-- Tick Icon -->
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:contentDescription="@string/tick"
-            android:src="@drawable/ic_tick"
+            android:contentDescription="Cross"
+            android:src="@drawable/ic_cross"
+            android:layout_gravity="center"
             android:layout_marginBottom="16dp"
-            app:tint="#00FF00" />
+            app:tint="#FF5722" />
 
-        <!-- Description -->
+        <!-- Message -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_have_finished_adding_a_new_employee_process_the_rest_of_the_process_is_completed_via_the_new_starter_as_a_self_service_process"
+            android:text="You have declined the employee's holiday request. The employee has been notified."
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:gravity="center"
             android:lineSpacingExtra="4dp"
             android:paddingHorizontal="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:maxLines="3" />
 
         <!-- Done Button -->
         <Button
-            android:id="@+id/btnDone"
+            android:id="@+id/btnDone2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_blue_button"
@@ -60,6 +63,7 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:paddingHorizontal="32dp"
-            android:paddingVertical="8dp" />
+            android:paddingVertical="8dp"
+            android:layout_gravity="center" />
     </LinearLayout>
 </RelativeLayout>

@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
-    tools:context=".NewEmployeeConfirmActivity">
+    android:background="#333333">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,19 +15,16 @@
         android:layout_margin="16dp"
         android:gravity="center">
 
-
-    <!-- Title -->
-        <TextView
+    <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_employee_added"
+            android:text="Changes Saved"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="22sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="16dp" />
 
-        <!-- Success Icon -->
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -37,21 +33,21 @@
             android:layout_marginBottom="16dp"
             app:tint="#00FF00" />
 
-        <!-- Description -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_have_finished_adding_a_new_employee_process_the_rest_of_the_process_is_completed_via_the_new_starter_as_a_self_service_process"
+            android:text="Your updates have been successfully saved. All changes to your details have been applied."
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="15sp"
             android:gravity="center"
             android:lineSpacingExtra="4dp"
             android:paddingHorizontal="16dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+            android:ellipsize="end"
+            android:maxLines="3" />
 
-        <!-- Done Button -->
         <Button
-            android:id="@+id/btnDone"
+            android:id="@+id/btnDone3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_blue_button"
