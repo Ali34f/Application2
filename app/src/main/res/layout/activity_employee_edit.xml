@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:fillViewport="true"
-    tools:context=".EmployeeProfileActivity">
+    tools:context=".EmployeeEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,8 +25,8 @@
                 android:layout_height="40dp"
                 android:src="@drawable/ic_blue_arrow"
                 android:contentDescription="@string/back"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="24dp" />
+                android:layout_marginTop="16dp"
+                android:layout_alignParentStart="true" />
         </RelativeLayout>
 
         <!-- App Title -->
@@ -43,7 +43,7 @@
 
         <!-- Profile Picture -->
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ProfileImage"
+            android:id="@+id/profileImage_EditPage"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_employee_image2"
@@ -64,19 +64,6 @@
             android:textStyle="bold"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp" />
-
-        <!-- Edit Button -->
-        <Button
-            android:id="@+id/btnEditDetails"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/edit_details"
-            android:textColor="@android:color/white"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:background="@drawable/rounded_blue_button"
-            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp" />
 
         <!-- Details Section -->
@@ -94,18 +81,20 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:labelFor="@id/editTextName" />
             <EditText
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="name"
-                android:hint="@string/michael_brown"
-                android:background="@drawable/rounded_edittext"
                 android:inputType="textPersonName"
+                android:text="@string/michael_brown"
+                android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:enabled="false"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:maxWidth="320dp" />
 
             <!-- Position -->
             <TextView
@@ -115,18 +104,20 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:labelFor="@id/editTextPosition" />
             <EditText
+                android:id="@+id/editTextPosition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="jobTitle"
-                android:hint="@string/project_manager"
-                android:background="@drawable/rounded_edittext"
                 android:inputType="text"
+                android:text="@string/digital_coder"
+                android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:enabled="false"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:maxWidth="320dp" />
 
             <!-- Department -->
             <TextView
@@ -136,18 +127,20 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:labelFor="@id/editTextDepartment" />
             <EditText
+                android:id="@+id/editTextDepartment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="organization"
-                android:hint="@string/design"
-                android:background="@drawable/rounded_edittext"
                 android:inputType="text"
+                android:text="@string/design"
+                android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:enabled="false"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:maxWidth="320dp" />
 
             <!-- Phone Number -->
             <TextView
@@ -157,18 +150,20 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:labelFor="@id/editTextPhoneNumber" />
             <EditText
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="phone"
-                android:hint="@string/number4"
-                android:background="@drawable/rounded_edittext"
                 android:inputType="phone"
+                android:text="@string/number2"
+                android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:enabled="false"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:maxWidth="320dp" />
 
             <!-- Email Address -->
             <TextView
@@ -178,18 +173,64 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="4dp" />
+                android:layout_marginBottom="4dp"
+                android:labelFor="@id/editTextEmailAddress" />
             <EditText
+                android:id="@+id/editTextEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="emailAddress"
-                android:hint="@string/michaelbrown_company_com"
-                android:background="@drawable/rounded_edittext"
                 android:inputType="textEmailAddress"
+                android:text="@string/michaelbrown_company_com"
+                android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
-                android:enabled="false"
                 android:textColor="@android:color/black"
-                android:layout_marginBottom="16dp" />
+                android:layout_marginBottom="16dp"
+                android:maxWidth="320dp" />
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            style="?android:attr/buttonBarStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp">
+
+            <!-- Cancel Edits Button -->
+            <Button
+                android:id="@+id/btnCancelEdits"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minWidth="160dp"
+                android:maxWidth="320dp"
+                android:text="@string/cancel_edits"
+                android:textAllCaps="false"
+                android:background="@drawable/rounded_red_button"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_marginEnd="8dp" />
+
+            <!-- Confirm Edits Button -->
+            <Button
+                android:id="@+id/btnConfirmEdits"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minWidth="160dp"
+                android:maxWidth="320dp"
+                android:text="@string/confirm_edits"
+                android:textAllCaps="false"
+                android:background="@drawable/rounded_green_button"
+                android:textSize="18sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:layout_marginStart="8dp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

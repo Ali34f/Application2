@@ -38,7 +38,7 @@
         android:layout_marginStart="16dp"
         android:layout_below="@id/headerSection"
         android:contentDescription="@string/back"
-        app:tint="#8A2A00"/>
+        app:tint="#FF5722"/>
 
     <!-- Notifications Title -->
     <TextView

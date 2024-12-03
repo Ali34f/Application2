@@ -2,7 +2,9 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    tools:context=".EmployeeRestActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,7 +27,7 @@
             android:id="@+id/appTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WorkConnect"
+            android:text="@string/workconnect"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -37,7 +39,7 @@
             android:id="@+id/subtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stay connected at work effortlessly!"
+            android:text="@string/stay_connected_at_work_effortlessly"
             android:textSize="16sp"
             android:textColor="@android:color/darker_gray"
             android:gravity="center"
@@ -93,7 +95,7 @@
             android:id="@+id/btnChangSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Changes"
+            android:text="@string/save_changes"
             android:backgroundTint="#2272D9"
             android:background="@drawable/rounded_blue_button"
             android:textColor="@android:color/white"

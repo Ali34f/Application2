@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333">
+    android:background="#333333"
+    tools:context=".EmployeeHolidayConfirmActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=" Holiday Request Submitted "
+            android:text="@string/holiday_request_submitted"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -36,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your holiday request has been successfully submitted. You will be notified once it is reviewed"
+            android:text="@string/holiday_request_confirmation"
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:gravity="center"

@@ -3,13 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".EmployeeManagementActivity">
 
     <!-- Header -->
     <LinearLayout
         android:id="@+id/headerLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="83dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#D3D3D3"
@@ -37,11 +38,13 @@
         android:contentDescription="@string/back"
         android:layout_below="@id/headerLayout"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        app:tint="#FF5722"/>
 
     <!-- Button Row -->
     <LinearLayout
         android:id="@+id/buttonRowLayout"
+        style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -53,9 +56,10 @@
         <!-- Add Employee Button -->
         <Button
             android:id="@+id/btnAddEmployee"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_orange_button"
+            android:background="@drawable/rounded_edit_button"
             android:text="@string/add_employee"
             android:textColor="@android:color/white"
             android:paddingHorizontal="16dp"
@@ -67,6 +71,7 @@
         <!-- Sort/Filter Button -->
         <Button
             android:id="@+id/btnSortFilter"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_white_border_button"
@@ -132,15 +137,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -152,7 +156,7 @@
                         android:id="@+id/tvEmployeeName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Emma Watson"
+                        android:text="@string/emma_watson"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -161,7 +165,7 @@
                         android:id="@+id/tvEmployeePosition1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Graphic Designer"
+                        android:text="@string/graphic_designer"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -171,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -188,15 +192,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image2"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image2"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -208,7 +211,7 @@
                         android:id="@+id/tvEmployeeName2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="John Doe"
+                        android:text="@string/john_doe"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -217,7 +220,7 @@
                         android:id="@+id/tvEmployeePosition2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Software Engineer"
+                        android:text="@string/software_engineer"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -227,7 +230,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -244,15 +247,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image3"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image3"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -264,7 +266,7 @@
                         android:id="@+id/tvEmployeeName3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Jane Smith"
+                        android:text="@string/jane_smith"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -273,7 +275,7 @@
                         android:id="@+id/tvEmployeePosition3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="UI Designer"
+                        android:text="@string/ui_designer"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -283,7 +285,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -300,15 +302,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image4"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image4"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -320,7 +321,7 @@
                         android:id="@+id/tvEmployeeName4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Michael Brown"
+                        android:text="@string/michael_brown"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -329,7 +330,7 @@
                         android:id="@+id/tvEmployeePosition4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Project Manager"
+                        android:text="@string/project_manager"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -339,7 +340,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -356,15 +357,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image5"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image5"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -376,7 +376,7 @@
                         android:id="@+id/tvEmployeeName5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rosie Meadowfield"
+                        android:text="@string/rosie_meadowfield"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -385,7 +385,7 @@
                         android:id="@+id/tvEmployeePosition5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Project Manager"
+                        android:text="@string/project_manager"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -395,7 +395,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"
@@ -411,15 +411,14 @@
                 android:gravity="center_vertical"
                 android:layout_marginBottom="16dp">
 
-                <ImageView
+                <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_employee_image6"
-                    android:contentDescription="Employee Image"
-                    android:background="@drawable/circular_image_background"
-                    android:scaleType="centerCrop"
+                    android:contentDescription="@string/employee_image6"
+                    app:shapeAppearanceOverlay="@style/ShapeAppearance_MaterialComponents_Circle"
                     android:layout_marginEnd="16dp"
-                    android:clipToOutline="true"/>
+                    android:scaleType="centerCrop" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -431,7 +430,7 @@
                         android:id="@+id/tvEmployeeName6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hamaza Al Biruni"
+                        android:text="@string/hamaza_al_biruni"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
                         android:textSize="16sp" />
@@ -440,7 +439,7 @@
                         android:id="@+id/tvEmployeePosition6"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Project Manager"
+                        android:text="@string/project_manager"
                         android:textColor="#757575"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -450,7 +449,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_edit_button"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
                     android:textStyle="bold"

@@ -1,5 +1,21 @@
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@android:color/white" />
-    <corners android:radius="16dp" />
-    <!-- Padding needs to be set in the layout file, not in the shape -->
-</shape>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Focused state with a blue outline -->
+    <item android:state_focused="true">
+        <shape>
+            <solid android:color="@android:color/white" />
+            <!-- Increase the radius for rounder corners -->
+            <corners android:radius="16dp" />
+            <stroke android:width="2dp" android:color="@android:color/holo_blue_light" />
+        </shape>
+    </item>
+
+    <!-- Default state with a gray outline -->
+    <item>
+        <shape>
+            <solid android:color="@android:color/white" />
+            <!-- Increase the radius for rounder corners -->
+            <corners android:radius="40dp" />
+            <stroke android:width="1dp" android:color="@android:color/darker_gray" />
+        </shape>
+    </item>
+</selector>

@@ -1,9 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333">
+    android:background="#333333"
+    tools:context=".DeleteConfirmActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +20,7 @@
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Employee Deleted"
+            android:text="@string/employee_deleted"
             android:textColor="@android:color/white"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -36,7 +38,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="You have successfully deleted the employee's profile. All associated data has been removed from the system."
+            android:text="@string/deleted_employee_message"
             android:textColor="@android:color/white"
             android:textSize="15sp"
             android:gravity="center"

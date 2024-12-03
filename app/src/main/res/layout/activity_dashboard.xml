@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,8 +10,8 @@
     <!-- Welcome Text -->
     <LinearLayout
         android:id="@+id/llWelcomeContainer"
-        android:layout_width="465dp"
-        android:layout_height="99dp"
+        android:layout_width="match_parent"
+        android:layout_height="83dp"
         android:background="#D3D3D3"
         android:gravity="center"
         android:padding="16dp"
@@ -156,6 +157,7 @@
                 android:layout_height="30dp"
                 android:src="@drawable/ic_management"
                 android:layout_marginEnd="8dp"
+                app:tint="#FFFFFF"
                 android:contentDescription="@string/employee_management_icon" />
 
             <TextView

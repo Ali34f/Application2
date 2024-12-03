@@ -37,7 +37,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/your_password_has_been_successfully_reset_you_can_now_use_your_new_password_to_log_in_to_the_system"
+            android:text="@string/rest_confirmation_message"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:gravity="center"

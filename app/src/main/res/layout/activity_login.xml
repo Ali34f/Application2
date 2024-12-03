@@ -34,7 +34,7 @@
             android:gravity="center"
             android:layout_marginBottom="24dp" />
 
-        <!-- Username Label (aligned to left) -->
+        <!-- Username Label -->
         <TextView
             android:id="@+id/username_label"
             android:layout_width="match_parent"

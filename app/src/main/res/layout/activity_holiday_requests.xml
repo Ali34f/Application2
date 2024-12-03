@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@android:color/white"
+    tools:context=".HolidayRequestActivity">
 
     <!-- Header -->
     <LinearLayout
@@ -37,14 +39,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
         android:layout_below="@id/headerSection"
-        android:contentDescription="Back" />
+        android:contentDescription="@string/back" />
 
     <!-- Holiday Requests Title -->
     <TextView
         android:id="@+id/holidayRequestsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Holiday Requests"
+        android:text="@string/holiday_requests2"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -86,7 +88,7 @@
                         android:id="@+id/requestName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Rosie Cole"
+                        android:text="@string/rosie_cole"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -96,7 +98,7 @@
                         android:id="@+id/requestDate1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Request 20th-25th Dec"
+                        android:text="@string/request_20th_25th_dec"
                         android:textSize="14sp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="4dp" />
@@ -105,7 +107,7 @@
                         android:id="@+id/requestStatus1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status: Pending"
+                        android:text="@string/status_pending"
                         android:textSize="14sp"
                         android:textColor="#66BB6A"
                         android:layout_marginBottom="4dp" />
@@ -116,10 +118,12 @@
                     android:id="@+id/viewButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View"
+                    android:text="@string/view"
                     android:textColor="@android:color/white"
                     android:background="@drawable/rounded_orange_button"
                     android:padding="12dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     android:textAllCaps="false"
                     android:layout_gravity="center_vertical" />
             </LinearLayout>
@@ -145,7 +149,7 @@
                         android:id="@+id/requestName2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Emma Watson"
+                        android:text="@string/emma_watson"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -155,7 +159,7 @@
                         android:id="@+id/requestDate2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Request 1st-5th Jan"
+                        android:text="@string/request_1st_5th_jan"
                         android:textSize="14sp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="4dp" />
@@ -164,7 +168,7 @@
                         android:id="@+id/requestStatus2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status: Rejected"
+                        android:text="@string/status_rejected"
                         android:textSize="14sp"
                         android:textColor="#E53935"
                         android:layout_marginBottom="4dp" />
@@ -175,7 +179,8 @@
                     android:id="@+id/viewButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View"
+                    android:text="@string/view"
+                    android:textSize="18sp"
                     android:textColor="@android:color/white"
                     android:background="@drawable/rounded_orange_button"
                     android:padding="12dp"
@@ -203,7 +208,7 @@
                         android:id="@+id/requestName3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hamza Al Biruni"
+                        android:text="@string/hamza_al_biruni"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"
@@ -213,7 +218,7 @@
                         android:id="@+id/requestDate3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Request 15th-20th Feb"
+                        android:text="@string/request_15th_20th_feb"
                         android:textSize="14sp"
                         android:textColor="@android:color/black"
                         android:layout_marginBottom="4dp" />
@@ -222,7 +227,7 @@
                         android:id="@+id/requestStatus3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Status: Pending"
+                        android:text="@string/status_pending"
                         android:textSize="14sp"
                         android:textColor="#66BB6A"
                         android:layout_marginBottom="4dp" />
@@ -233,7 +238,8 @@
                     android:id="@+id/viewButton3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="View"
+                    android:text="@string/view"
+                    android:textSize="18sp"
                     android:textColor="@android:color/white"
                     android:background="@drawable/rounded_orange_button"
                     android:padding="12dp"

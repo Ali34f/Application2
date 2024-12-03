@@ -1,7 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@android:color/white"
     tools:context=".SettingsActivity">
 
@@ -34,9 +36,10 @@
         android:contentDescription="@string/back"
         android:layout_below="@id/headerLayout"
         android:layout_marginTop="8dp"
-        android:layout_marginStart="16dp" />
+        android:layout_marginStart="16dp"
+        app:tint="#FF5722"/>
 
-    <!-- Title Below Back Button -->
+    <!-- Title -->
     <TextView
         android:id="@+id/titleBelowBack"
         android:layout_width="wrap_content"
@@ -195,6 +198,7 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="password"
             android:hint="@string/enter_password"
             android:inputType="textPassword"
             android:background="@drawable/rounded_edittext"
@@ -215,6 +219,7 @@
             android:id="@+id/etUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:autofillHints="name"
             android:hint="@string/enter_username_email"
             android:inputType="textEmailAddress"
             android:background="@drawable/rounded_edittext"
@@ -229,6 +234,7 @@
             android:layout_height="wrap_content"
             android:text="@string/save_changes"
             android:backgroundTint="#FFA500"
+            android:background="@drawable/rounded_edittext"
             android:textColor="@android:color/white"
             android:textStyle="bold"
             android:textSize="20sp"

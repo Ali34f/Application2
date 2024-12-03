@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    tools:context=".ViewHolidayRequestActivity">
 
     <!-- Header Section -->
     <LinearLayout
         android:id="@+id/headerSection"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="83dp"
         android:orientation="vertical"
         android:background="#E8E8E8"
         android:padding="16dp">
@@ -18,8 +21,8 @@
             android:id="@+id/hrAdminProTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="HRAdminPro"
-            android:textSize="22sp"
+            android:text="@string/hradminpro"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:gravity="center"
@@ -41,6 +44,7 @@
             android:layout_height="40dp"
             android:src="@drawable/ic_back"
             android:contentDescription="@string/back"
+            app:tint="#FF5722"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true" />
 
@@ -49,7 +53,7 @@
             android:id="@+id/pageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Holiday Requests"
+            android:text="@string/Holiday_request_title"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -71,7 +75,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Holiday Requests Details"
+            android:text="@string/holiday_requests_details_title"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -82,31 +86,36 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Reason for Leave"
+            android:text="@string/reason_for_leave_header1"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Vacation"
+            android:layout_width="237dp"
+            android:layout_height="54dp"
+            android:autofillHints="name"
+            android:hint="@string/vacation"
             android:background="@drawable/rounded_edittext"
+            android:inputType="text"
             android:padding="12dp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="16dp"
+             />
 
         <!-- Start Date -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Start Date"
+            android:text="@string/start_date"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="20/12/2023"
+            android:layout_width="237dp"
+            android:layout_height="54dp"
+            android:autofillHints="date"
+            android:hint="@string/random_date"
             android:background="@drawable/rounded_edittext"
+            android:inputType="date"
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
@@ -114,15 +123,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="End Date"
+            android:text="@string/end_date"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="25/12/2023"
+            android:layout_width="237dp"
+            android:layout_height="54dp"
+            android:autofillHints="date"
+            android:hint="@string/random_end_date"
             android:background="@drawable/rounded_edittext"
+            android:inputType="date"
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
@@ -130,20 +141,23 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Additional Information"
+            android:text="@string/additional_information"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="I want to go to Ibiza"
+            android:layout_width="337dp"
+            android:layout_height="77dp"
+            android:autofillHints="name"
+            android:hint="@string/random_information"
             android:background="@drawable/rounded_edittext"
+            android:inputType="textMultiLine"
             android:padding="12dp"
             android:layout_marginBottom="16dp" />
 
         <!-- Action Buttons -->
         <LinearLayout
+            style="?android:attr/buttonBarStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -153,30 +167,36 @@
             <!-- Reject Button -->
             <Button
                 android:id="@+id/rejectButton"
-                android:layout_width="0dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:background="@drawable/rounded_red_button"
-                android:text="Reject"
+                android:text="@string/reject_btn"
                 android:textColor="@android:color/white"
-                android:layout_marginEnd="8dp"
+                android:textSize="18sp"
+                android:layout_marginEnd="16dp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
-                android:padding="12dp" />
+                android:padding="12dp"
+                android:minWidth="160dp"
+                android:maxWidth="320dp" />
 
             <!-- Approve Button -->
             <Button
                 android:id="@+id/approveButton"
-                android:layout_width="0dp"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:textSize="18sp"
                 android:background="@drawable/rounded_green_button"
-                android:text="Approve"
+                android:text="@string/approve_btn"
                 android:textColor="@android:color/white"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="16dp"
                 android:textStyle="bold"
                 android:textAllCaps="false"
-                android:padding="12dp" />
-        </LinearLayout>
+                android:padding="12dp"
+                android:minWidth="160dp"
+                android:maxWidth="320dp" />
+    </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -47,8 +47,8 @@
             <!-- Centered Arrow Icon -->
             <ImageView
                 android:id="@+id/arrowIcon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@drawable/ic_arrow"
                 android:contentDescription="@string/arrow"
                 android:layout_gravity="center" />

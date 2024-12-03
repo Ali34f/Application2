@@ -1,47 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="password_label" type="id">password</item>
-    <item name="etUsername" type="id">etUsername</item>
-    <item name="username_label" type="id">username_label</item>
-    <item name="etPassword" type="id">etPassword</item>
-    <item name="btnSignIn" type="id">btnSignIn</item>
-    <item name="llWelcomeContainer" type="id">welcomeContainer</item>
+    <item name="password_label" type="id" />
+    <item name="etUsername" type="id" />
+    <item name="username_label" type="id" />
+    <item name="etPassword" type="id" />
+    <item name="btnSignIn" type="id" />
+    <item name="llWelcomeContainer" type="id" />
     <item name="tvWelcome" type="id" />
-    <item name="tvBackToLogin" type="id">back_to_login</item>
-    <item name="llDashboardOverview" type="id">dashboard_overview</item>
-    <item name="btnBack" type="id">btn_back</item>
-    <item name="headerLayout" type="id">header_layout</item>
-    <item name="titleBelowBack" type="id">below_back</item>
-    <item name="contentSection" type="id">id_content_section</item>
-    <item name="btnConfirm" type="id">id_confirm</item>
-    <item name="btnDone" type="id">id_done_button</item>
-    <item name="btnAddEmployee" type="id">btn_add_employee</item>
-    <item name="btnSortFilter" type="id">btn_sort_filter</item>
-    <item name="searchBarLayout" type="id">btn_search_bar</item>
-    <item name="etSearchEmployee" type="id">id_search_employee</item>
-    <item name="tvEmployeeName" type="id">id_employee_name</item>
-    <item name="tvEmployeePosition" type="id">id_employee_position</item>
-    <item name="btnViewEmployee" type="id">id_view_employee</item>
-    <item name="buttonRowLayout" type="id">id_btn_layout</item>
-    <item name="headerImage" type="id">header_image</item>
-    <item name="pageTitle" type="id">page_title</item>
-    <item name="reasonForLeaveHeader" type="id">reason_for_leave</item>
-    <item name="etReasonForLeave" type="id">reason_for_leave_box</item>
-    <item name="startDateHeader" type="id">start_date_header</item>
-    <item name="etStartDate" type="id">start_date_box</item>
-    <item name="etEndDate" type="id">end_date_box</item>
-    <item name="additionalCommentsHeader" type="id">additional_comments</item>
-    <item name="endDateHeader" type="id">end_date</item>
-    <item name="etAdditionalComments" type="id">addtional_comments_box</item>
-    <item name="btnSubmitRequest" type="id">btn_submit</item>
-    <item name="btnBack2" type="id">btn_back2</item>
-    <item name="welcomeMessage" type="id">welcome_message</item>
-    <item name="upcomingHolidaySection" type="id">upcoming_holidays</item>
-    <item name="holidayImage" type="id">holiday_image</item>
-    <item name="upcomingHolidayTitle" type="id">upcoming_holiday_title</item>
-    <item name="holidayDetails" type="id">holiday_details</item>
-    <item name="backToLogin" type="id">back_to_login</item>
-    <item name="buttonSection" type="id">button_section</item>
-    <item name="btnProfile" type="id">btn_profile</item>
-    <item name="btnRequestHoliday" type="id">btn_request</item>
+    <item name="tvBackToLogin" type="id" />
+    <item name="llDashboardOverview" type="id" />
+    <item name="btnBack" type="id" />
+    <item name="headerLayout" type="id" />
+    <item name="titleBelowBack" type="id" />
+    <item name="contentSection" type="id" />
+    <item name="btnConfirm" type="id" />
+    <item name="btnDone" type="id" />
+    <item name="btnAddEmployee" type="id" />
+    <item name="btnSortFilter" type="id" />
+    <item name="searchBarLayout" type="id" />
+    <item name="etSearchEmployee" type="id" />
+    <item name="tvEmployeeName" type="id" />
+    <item name="tvEmployeePosition" type="id" />
+    <item name="btnViewEmployee" type="id" />
+    <item name="buttonRowLayout" type="id" />
+    <item name="headerImage" type="id" />
+    <item name="pageTitle" type="id" />
+    <item name="reasonForLeaveHeader" type="id" />
+    <item name="etReasonForLeave" type="id" />
+    <item name="startDateHeader" type="id" />
+    <item name="etStartDate" type="id" />
+    <item name="etEndDate" type="id" />
+    <item name="additionalCommentsHeader" type="id" />
+    <item name="endDateHeader" type="id" />
+    <item name="etAdditionalComments" type="id" />
+    <item name="btnSubmitRequest" type="id" />
+    <item name="btnBack2" type="id" />
+    <item name="welcomeMessage" type="id" />
+    <item name="upcomingHolidaySection" type="id" />
+    <item name="holidayImage" type="id" />
+    <item name="upcomingHolidayTitle" type="id" />
+    <item name="holidayDetails" type="id" />
+    <item name="backToLogin" type="id" />
+    <item name="buttonSection" type="id" />
+    <item name="btnProfile" type="id" />
+    <item name="btnRequestHoliday" type="id" />
+    <item name="backButton" type="id" />
+    <item name="employeeSection" type="id" />
+    <item name="employeeImage" type="id" />
+    <item name="employeePosition" type="id" />
+    <item name="employeeContactInfo" type="id" />
+    <item name="employeeStatus" type="id" />
+    <item name="holidayRequestSection" type="id" />
+    <item name="notificationTime3" type="id" />
+    <item name="notificationMessage3" type="id" />
+    <item name="notificationTitle3" type="id" />
+    <item name="iconReminder" type="id" />
+    <item name="notificationTitle1" type="id" />
+    <item name="notificationMessage1" type="id" />
+    <item name="notificationTime1" type="id" />
+    <item name="iconSecurity" type="id" />
+    <item name="notificationTitle2" type="id" />
+    <item name="notificationMessage2" type="id" />
+    <item name="notificationTime2" type="id" />
+    <item name="iconSystemAlert" type="id" />
+    <item name="notificationTitle" type="id" />
+    <item name="NotificationsScreen" type="id" />
+    <item name="approveButton1" type="id" />
+    <item name="rejectButton1" type="id" />
+    <item name="approveButton2" type="id" />
+    <item name="rejectButton2" type="id" />
+    <item name="actionButtonSection" type="id" />
+    <item name="editButton" type="id" />
+    <item name="deleteButton" type="id" />
 </resources>

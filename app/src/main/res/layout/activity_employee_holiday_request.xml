@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".EmployeeHolidayRequestActivity"
+    android:background="@android:color/white">
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/btnBack2"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_blue_arrow"
+        android:contentDescription="@string/back"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentStart="true" />
+
+    <!-- App Title -->
+    <TextView
+        android:id="@+id/appTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_title"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp" />
+
+    <!-- Header Image -->
+    <ImageView
+        android:id="@+id/headerImage"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_calendar_graphic"
+        android:contentDescription="@string/calendar_description"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/appTitle"
+        android:layout_marginTop="16dp" />
+
+    <!-- Page Title -->
+    <TextView
+        android:id="@+id/pageTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/page_title"
+        android:textColor="@android:color/black"
+        android:textSize="25sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/headerImage"
+        android:layout_marginTop="16dp" />
+
+    <!-- Reason for Leave Header -->
+    <TextView
+        android:id="@+id/reasonForLeaveHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/reason_for_leave_header"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/pageTitle" />
+
+    <!-- Reason for Leave Input -->
+    <EditText
+        android:id="@+id/etReasonForLeave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:hint="@string/reason_for_leave_hint"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="text"
+        android:padding="12dp"
+        android:textColorHint="#A9A9A9"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@id/reasonForLeaveHeader" />
+
+    <!-- Start Date Header -->
+    <TextView
+        android:id="@+id/startDateHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_date_header"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/etReasonForLeave" />
+
+    <!-- Start Date Input -->
+    <EditText
+        android:id="@+id/etStartDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="date"
+        android:hint="@string/start_date_hint"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="date"
+        android:padding="12dp"
+        android:textColorHint="#A9A9A9"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@id/startDateHeader" />
+
+    <!-- End Date Header -->
+    <TextView
+        android:id="@+id/endDateHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_date_header"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/etStartDate" />
+
+    <!-- End Date Input -->
+    <EditText
+        android:id="@+id/etEndDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="date"
+        android:hint="@string/end_date_hint"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="date"
+        android:padding="12dp"
+        android:textColorHint="#A9A9A9"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@id/endDateHeader" />
+
+    <!-- Additional Comments Header -->
+    <TextView
+        android:id="@+id/additionalCommentsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/additional_comments_header"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/etEndDate" />
+
+    <!-- Additional Comments Input -->
+    <EditText
+        android:id="@+id/etAdditionalComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="name"
+        android:hint="@string/additional_comments_hint"
+        android:background="@drawable/rounded_edittext"
+        android:inputType="textMultiLine"
+        android:padding="12dp"
+        android:textColorHint="#A9A9A9"
+        android:layout_marginHorizontal="16dp"
+        android:layout_below="@id/additionalCommentsHeader" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/btnSubmitRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit_request"
+        android:textSize="20sp"
+        android:background="@drawable/rounded_blue_button"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:layout_below="@id/etAdditionalComments"
+        android:layout_margin="24dp" />
+
+</RelativeLayout>

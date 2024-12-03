@@ -16,8 +16,7 @@
         android:layout_margin="16dp"
         android:gravity="center">
 
-
-    <!-- Title -->
+        <!-- Title -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -41,7 +40,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/you_have_finished_adding_a_new_employee_process_the_rest_of_the_process_is_completed_via_the_new_starter_as_a_self_service_process"
+            android:text="@string/new_employee_message"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:lineSpacingExtra="4dp"
+            android:paddingHorizontal="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_employee_message_2"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             android:gravity="center"
