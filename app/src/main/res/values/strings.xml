@@ -189,6 +189,10 @@
     <string name="admin_btn">Admin</string>
     <string name="employee_btn">Employee</string>
     <string name="please_sign_in">Please Sign In</string>
+    <string name="salary">Salary</string>
+    <string name="enter_salary">Enter Salary</string>
+    <string name="enter_start_date">Enter Start Date</string>
+
 
 
     <!-- Language-related strings -->
