@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.application2">
 
     <application
         android:allowBackup="true"
@@ -12,15 +13,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Application2"
         tools:targetApi="31">
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+
+        <!-- Main Activity -->
+        <activity android:name=".MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <!-- Other Activities -->
+        <activity android:name=".LoginActivity" android:exported="true" />
+        <activity android:name=".EmployeeLoginActivity" android:exported="true" />
+        <activity android:name=".EmployeeDashboardActivity" android:exported="true" />
+        <activity android:name=".EmployeeProfileActivity" android:exported="true" />
+        <activity android:name=".EmployeeEditActivity" android:exported="true" />
+        <activity android:name=".EmployeeEditConfirmActivity" android:exported="true" />
+        <activity android:name=".EmployeeRestActivity" android:exported="true" />
+        <activity android:name=".EmployeeRestConfirmActivity" android:exported="true" />
+        <activity android:name=".EmployeeHolidayRequestActivity" android:exported="true" />
+        <activity android:name=".EmployeeNotificationsActivity" android:exported="true" />
+        <activity android:name=".EmployeeSettingsActivity" android:exported="true" />
+        <activity android:name=".EmployeeHolidayConfirmActivity" android:exported="true" />
+        <activity android:name=".DashboardActivity" android:exported="true" />
+        <activity android:name=".RestActivity" android:exported="true" />
+        <activity android:name=".RestConfirmActivity" android:exported="true" />
+    </application>
 </manifest>
