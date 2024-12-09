@@ -72,4 +72,22 @@
     <item name="actionButtonSection" type="id" />
     <item name="editButton" type="id" />
     <item name="deleteButton" type="id" />
+    <item name="editTextName" type="id" />
+    <item name="editTextPosition" type="id" />
+    <item name="editTextId" type="id" />
+    <item name="editTextPhoneNumber" type="id" />
+    <item name="editTextEmailAddress" type="id" />
+    <item name="forgot_password_label1" type="id" />
+    <item name="etName" type="id" />
+    <item name="etPosition" type="id" />
+    <item name="etDepartment" type="id" />
+    <item name="etPhoneNumber" type="id" />
+    <item name="etEmailAddress" type="id" />
+    <item name="etSalary" type="id" />
+    <item name="employeeid" type="id" />
+    <item name="etid" type="id" />
+
+
+
+
 </resources>

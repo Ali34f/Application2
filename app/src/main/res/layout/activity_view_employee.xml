@@ -87,6 +87,15 @@
                 android:layout_marginTop="4dp" />
 
             <TextView
+                android:id="@+id/employeeid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/employee_id_number"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="8dp" />
+
+            <TextView
                 android:id="@+id/employeeContactInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -95,11 +104,22 @@
                 android:textColor="@android:color/black"
                 android:layout_marginTop="8dp" />
 
+            <!-- Salary -->
             <TextView
-                android:id="@+id/employeeStatus"
+                android:id="@+id/employeeSalary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/status_active"
+                android:text="Salary: $50,000"
+                android:textSize="14sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="4dp" />
+
+            <!-- Start Date -->
+            <TextView
+                android:id="@+id/employeeStartDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Start Date: 2023-01-15"
                 android:textSize="14sp"
                 android:textColor="@android:color/black"
                 android:layout_marginTop="4dp" />

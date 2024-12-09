@@ -119,23 +119,23 @@
                 android:layout_marginBottom="16dp"
                 android:maxWidth="320dp" />
 
-            <!-- Department -->
+            <!-- ID number -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/department"
+                android:text="@string/id"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp"
-                android:labelFor="@id/editTextDepartment" />
+                android:labelFor="@id/editTextId" />
             <EditText
-                android:id="@+id/editTextDepartment"
+                android:id="@+id/editTextId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autofillHints="organization"
                 android:inputType="text"
-                android:text="@string/design"
+                android:text="@string/id_number"
                 android:background="@drawable/rounded_edittext"
                 android:padding="12dp"
                 android:textColor="@android:color/black"

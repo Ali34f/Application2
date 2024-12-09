@@ -38,5 +38,16 @@
         <activity android:name=".DashboardActivity" android:exported="true" />
         <activity android:name=".RestActivity" android:exported="true" />
         <activity android:name=".RestConfirmActivity" android:exported="true" />
+        <activity android:name=".EmployeeManagementActivity" />
+        <activity android:name=".HolidayRequestActivity" />
+        <activity android:name=".NotificationsActivity" />
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".ViewEmployeeActivity" />
+        <activity android:name=".NewEmployeeDetailsActivity" />
+        <activity android:name=".NewEmployeeConfirmActivity" />
+        <activity android:name=".ConfirmDeleteEmployeeActivity" />
+        <activity android:name=".DeleteConfirmActivity" />
+        <activity android:name=".EditEmployeeActivity" />
+        <activity android:name=".EditEmployeeConfirmActivity" />
     </application>
 </manifest>

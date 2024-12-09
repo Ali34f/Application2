@@ -64,8 +64,8 @@
     <string name="enter_employee_s_name">Enter employee\'s name</string>
     <string name="position">Position</string>
     <string name="enter_job_position">Enter job position</string>
-    <string name="department">Department</string>
-    <string name="enter_department">Enter Department</string>
+    <string name="id">ID Number</string>
+    <string name="enter_id">Enter ID</string>
     <string name="phone_number">Phone Number</string>
     <string name="enter_phone_number">Enter phone number</string>
     <string name="email_address">Email Address</string>
@@ -192,6 +192,8 @@
     <string name="salary">Salary</string>
     <string name="enter_salary">Enter Salary</string>
     <string name="enter_start_date">Enter Start Date</string>
+    <string name="id_number">8820</string>
+    <string name="employee_id_number">ID number: 5786</string>
 
 
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     android:fillViewport="true"
     tools:context=".EmployeeProfileActivity">
@@ -96,9 +96,9 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
             <EditText
+                android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="name"
                 android:hint="@string/michael_brown"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="textPersonName"
@@ -117,9 +117,9 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
             <EditText
+                android:id="@+id/editTextPosition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="jobTitle"
                 android:hint="@string/project_manager"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="text"
@@ -132,16 +132,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/department"
+                android:text="@string/id"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
             <EditText
+                android:id="@+id/editTextId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="organization"
-                android:hint="@string/design"
+                android:hint="@string/id_number"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="text"
                 android:padding="12dp"
@@ -159,9 +159,9 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
             <EditText
+                android:id="@+id/editTextPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="phone"
                 android:hint="@string/number4"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="phone"
@@ -180,9 +180,9 @@
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="4dp" />
             <EditText
+                android:id="@+id/editTextEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autofillHints="emailAddress"
                 android:hint="@string/michaelbrown_company_com"
                 android:background="@drawable/rounded_edittext"
                 android:inputType="textEmailAddress"

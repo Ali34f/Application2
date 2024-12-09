@@ -69,6 +69,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/editName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="name"
@@ -88,6 +89,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/editPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="jobTitle"
@@ -101,16 +103,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/department"
+            android:text="@string/id"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/editID"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="organizationName"
-            android:hint="@string/design"
+            android:hint="@string/id_number"
             android:background="@drawable/rounded_edittext"
             android:inputType="text"
             android:padding="12dp"
@@ -126,6 +129,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/editPhoneNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="phone"
@@ -145,6 +149,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/editEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"

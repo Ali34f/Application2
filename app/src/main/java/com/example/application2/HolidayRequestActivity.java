@@ -1,4 +1,13 @@
 package com.example.application2;
 
-public class HolidayRequestActivity {
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class HolidayRequestActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_holiday_requests);
+    }
 }

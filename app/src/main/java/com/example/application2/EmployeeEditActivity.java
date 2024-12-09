@@ -11,7 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EmployeeEditActivity extends AppCompatActivity {
 
-    private EditText nameField, positionField, departmentField, phoneField, emailField;
+    private EditText nameField, positionField, idField, phoneField, emailField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
         // Initialize fields
         nameField = findViewById(R.id.editTextName);
         positionField = findViewById(R.id.editTextPosition);
-        departmentField = findViewById(R.id.editTextDepartment);
+        idField = findViewById(R.id.editTextId);
         phoneField = findViewById(R.id.editTextPhoneNumber);
         emailField = findViewById(R.id.editTextEmailAddress);
 
@@ -61,11 +61,11 @@ public class EmployeeEditActivity extends AppCompatActivity {
      */
     private void loadExistingDetails() {
         SharedPreferences prefs = getSharedPreferences("EmployeeDetails", MODE_PRIVATE);
-        nameField.setText(prefs.getString("Name", "Michael Brown"));
-        positionField.setText(prefs.getString("Position", "Project Manager"));
-        departmentField.setText(prefs.getString("Department", "Design"));
-        phoneField.setText(prefs.getString("Phone", "+1234567890"));
-        emailField.setText(prefs.getString("Email", "michaelbrown@company.com"));
+        nameField.setText(prefs.getString("Name", getString(R.string.michael_brown)));
+        positionField.setText(prefs.getString("Position", getString(R.string.project_manager)));
+        idField.setText(prefs.getString("ID Number", getString(R.string.id_number)));  // Updated to use ID field
+        phoneField.setText(prefs.getString("Phone", getString(R.string.number4)));
+        emailField.setText(prefs.getString("Email", getString(R.string.michaelbrown_company_com)));
     }
 
     /**
@@ -76,15 +76,15 @@ public class EmployeeEditActivity extends AppCompatActivity {
     private boolean saveUpdatedDetails() {
         String name = nameField.getText().toString().trim();
         String position = positionField.getText().toString().trim();
-        String department = departmentField.getText().toString().trim();
+        String id = idField.getText().toString().trim();
         String phone = phoneField.getText().toString().trim();
         String email = emailField.getText().toString().trim();
 
-        if (validateInputs(name, position, department, phone, email)) {
+        if (validateInputs(name, position, id, phone, email)) {
             SharedPreferences.Editor editor = getSharedPreferences("EmployeeDetails", MODE_PRIVATE).edit();
             editor.putString("Name", name);
             editor.putString("Position", position);
-            editor.putString("Department", department);
+            editor.putString("ID Number", id);  // Save the ID number
             editor.putString("Phone", phone);
             editor.putString("Email", email);
             editor.apply();
@@ -100,7 +100,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
     /**
      * Validate inputs to ensure all fields are filled.
      */
-    private boolean validateInputs(String name, String position, String department, String phone, String email) {
-        return !name.isEmpty() && !position.isEmpty() && !department.isEmpty() && !phone.isEmpty() && !email.isEmpty();
+    private boolean validateInputs(String name, String position, String id, String phone, String email) {
+        return !name.isEmpty() && !position.isEmpty() && !id.isEmpty() && !phone.isEmpty() && !email.isEmpty();
     }
 }
