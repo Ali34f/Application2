@@ -1,18 +1,23 @@
 package com.example.application2;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.Calendar;
 
 public class NewEmployeeDetailsActivity extends AppCompatActivity {
 
     private EditText etName, etPosition, etEmployeeID, etPhoneNumber, etEmailAddress, etSalary, etStartDate;
     private Button btnCancel, btnConfirm;
+    private ImageView btnBack;
     private DatabaseHelper dbHelper;
 
     @Override
@@ -30,8 +35,12 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         etStartDate = findViewById(R.id.etStartDate);
         btnCancel = findViewById(R.id.btnCancel);
         btnConfirm = findViewById(R.id.btnConfirm);
+        btnBack = findViewById(R.id.btnBack);
 
         dbHelper = new DatabaseHelper(this);
+
+        // Back Button Click Listener
+        btnBack.setOnClickListener(v -> navigateToEmployeeManagement());
 
         // Start Date Picker
         etStartDate.setOnClickListener(v -> showDatePicker());
@@ -41,6 +50,14 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
 
         // Cancel Button Click Listener
         btnCancel.setOnClickListener(v -> finish());
+    }
+
+    // Navigate back to EmployeeManagementActivity
+    private void navigateToEmployeeManagement() {
+        Intent intent = new Intent(NewEmployeeDetailsActivity.this, EmployeeManagementActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        finish();
     }
 
     // Show Date Picker Dialog
@@ -57,7 +74,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         datePickerDialog.show();
     }
 
-    // Save Employee Data
+    // Save Employee Data and Navigate to Confirmation Screen
     private void saveEmployee() {
         String name = etName.getText().toString().trim();
         String position = etPosition.getText().toString().trim();
@@ -81,7 +98,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
             return;
         }
 
-        // Create new Employee object (ID is auto-generated)
+        // Create new Employee object
         Employee employee = new Employee(name, position, email, phoneNumber, salary, startDate);
 
         // Add employee to the database
@@ -89,9 +106,16 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
 
         if (result != -1) {
             Toast.makeText(this, "Employee added successfully", Toast.LENGTH_SHORT).show();
-            finish();
+            navigateToConfirmation();
         } else {
             Toast.makeText(this, "Error adding employee", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // Navigate to NewEmployeeConfirmActivity
+    private void navigateToConfirmation() {
+        Intent intent = new Intent(NewEmployeeDetailsActivity.this, NewEmployeeConfirmActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

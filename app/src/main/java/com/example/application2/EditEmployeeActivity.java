@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class EditEmployeeActivity extends Activity {
 
     private EditText editName, editPosition, editID, editPhoneNumber, editEmailAddress;
     private Button btnCancel, btnConfirm;
+    private ImageView btnBack;
     private DatabaseHelper dbHelper;
     private int employeeId; // The ID of the employee to be edited
 
@@ -20,13 +22,7 @@ public class EditEmployeeActivity extends Activity {
         setContentView(R.layout.activity_edit_employee);
 
         // Initialize views
-        editName = findViewById(R.id.editName);
-        editPosition = findViewById(R.id.editPosition);
-        editID = findViewById(R.id.editID);
-        editPhoneNumber = findViewById(R.id.editPhoneNumber);
-        editEmailAddress = findViewById(R.id.editEmailAddress);
-        btnCancel = findViewById(R.id.btnCancel);
-        btnConfirm = findViewById(R.id.btnConfirm);
+        initializeViews();
 
         // Initialize Database Helper
         dbHelper = new DatabaseHelper(this);
@@ -37,17 +33,47 @@ public class EditEmployeeActivity extends Activity {
         if (employeeId != -1) {
             loadEmployeeDetails(employeeId);
         } else {
-            Toast.makeText(this, "Invalid employee ID", Toast.LENGTH_SHORT).show();
+            showToast("Invalid employee ID");
             finish();
         }
 
-        // Cancel button click listener
+        // Set button click listeners
+        setButtonActions();
+    }
+
+    /**
+     * Initialize views from the layout.
+     */
+    private void initializeViews() {
+        editName = findViewById(R.id.editName);
+        editPosition = findViewById(R.id.editPosition);
+        editID = findViewById(R.id.editID);
+        editPhoneNumber = findViewById(R.id.editPhoneNumber);
+        editEmailAddress = findViewById(R.id.editEmailAddress);
+        btnCancel = findViewById(R.id.btnCancel);
+        btnConfirm = findViewById(R.id.btnConfirm);
+        btnBack = findViewById(R.id.btnBack);
+    }
+
+    /**
+     * Set button click actions for back, cancel, and confirm.
+     */
+    private void setButtonActions() {
+        // Back button action
+        btnBack.setOnClickListener(v -> navigateBackToViewEmployee());
+
+        // Cancel button action
         btnCancel.setOnClickListener(v -> finish());
 
-        // Confirm button click listener
+        // Confirm button action
         btnConfirm.setOnClickListener(v -> updateEmployee());
     }
 
+    /**
+     * Load employee details into the form fields.
+     *
+     * @param id The ID of the employee to load.
+     */
     private void loadEmployeeDetails(int id) {
         Employee employee = dbHelper.getEmployeeById(id);
         if (employee != null) {
@@ -57,11 +83,14 @@ public class EditEmployeeActivity extends Activity {
             editPhoneNumber.setText(employee.getPhone());
             editEmailAddress.setText(employee.getEmail());
         } else {
-            Toast.makeText(this, "Employee not found", Toast.LENGTH_SHORT).show();
+            showToast("Employee not found");
             finish();
         }
     }
 
+    /**
+     * Update the employee's details in the database.
+     */
     private void updateEmployee() {
         String name = editName.getText().toString().trim();
         String position = editPosition.getText().toString().trim();
@@ -69,7 +98,7 @@ public class EditEmployeeActivity extends Activity {
         String email = editEmailAddress.getText().toString().trim();
 
         if (name.isEmpty() || position.isEmpty() || phone.isEmpty() || email.isEmpty()) {
-            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+            showToast("Please fill in all fields");
             return;
         }
 
@@ -78,12 +107,32 @@ public class EditEmployeeActivity extends Activity {
         int rowsAffected = dbHelper.updateEmployee(updatedEmployee);
 
         if (rowsAffected > 0) {
-            Toast.makeText(this, "Employee updated successfully", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, EditEmployeeConfirmActivity.class);
+            showToast("Employee updated successfully");
+            Intent intent = new Intent(this, ViewEmployeeActivity.class);
+            intent.putExtra("EMPLOYEE_ID", employeeId);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(this, "Error updating employee", Toast.LENGTH_SHORT).show();
+            showToast("Error updating employee");
         }
+    }
+
+    /**
+     * Navigate back to the ViewEmployeeActivity.
+     */
+    private void navigateBackToViewEmployee() {
+        Intent intent = new Intent(this, ViewEmployeeActivity.class);
+        intent.putExtra("EMPLOYEE_ID", employeeId);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Utility method to show toast messages.
+     *
+     * @param message The message to display.
+     */
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }

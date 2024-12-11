@@ -2,15 +2,15 @@ package com.example.application2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity to view, edit, and delete an employee's details.
+ */
 public class ViewEmployeeActivity extends AppCompatActivity {
 
     private TextView tvEmployeeName, tvEmployeePosition, tvEmployeeId, tvEmployeeContactInfo, tvEmployeeSalary, tvEmployeeStartDate;
@@ -26,6 +26,29 @@ public class ViewEmployeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_employee);
 
         // Initialize views
+        initializeViews();
+
+        // Initialize database helper
+        db = new DatabaseHelper(this);
+
+        // Get the employee ID from the intent
+        employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
+
+        if (employeeId != -1) {
+            loadEmployeeData(employeeId);
+        } else {
+            showToast("Error loading employee data");
+            finish();
+        }
+
+        // Set button actions
+        setButtonActions();
+    }
+
+    /**
+     * Initialize views from the layout.
+     */
+    private void initializeViews() {
         tvEmployeeName = findViewById(R.id.employeeName);
         tvEmployeePosition = findViewById(R.id.employeePosition);
         tvEmployeeId = findViewById(R.id.employeeid);
@@ -35,20 +58,12 @@ public class ViewEmployeeActivity extends AppCompatActivity {
         btnEdit = findViewById(R.id.editButton);
         btnDelete = findViewById(R.id.deleteButton);
         backButton = findViewById(R.id.backButton);
+    }
 
-        // Initialize the database helper
-        db = new DatabaseHelper(this);
-
-        // Get the employee ID from the intent
-        employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
-
-        if (employeeId != -1) {
-            loadEmployeeData(employeeId);
-        } else {
-            Toast.makeText(this, "Error loading employee data", Toast.LENGTH_SHORT).show();
-            finish();
-        }
-
+    /**
+     * Set button click actions for back, edit, and delete.
+     */
+    private void setButtonActions() {
         // Back button action
         backButton.setOnClickListener(v -> finish());
 
@@ -56,54 +71,61 @@ public class ViewEmployeeActivity extends AppCompatActivity {
         btnEdit.setOnClickListener(v -> navigateToEditEmployee());
 
         // Delete button action
-        btnDelete.setOnClickListener(v -> confirmDeleteEmployee());
+        btnDelete.setOnClickListener(v -> navigateToConfirmDeleteEmployee());
     }
 
-    // Load employee data from the database
+    /**
+     * Load employee data from the database and populate views.
+     *
+     * @param id The ID of the employee to load.
+     */
     private void loadEmployeeData(int id) {
         currentEmployee = db.getEmployeeById(id);
 
         if (currentEmployee != null) {
             tvEmployeeName.setText(currentEmployee.getName());
             tvEmployeePosition.setText(currentEmployee.getPosition());
-            tvEmployeeId.setText("ID: " + currentEmployee.getId());
-            tvEmployeeContactInfo.setText("Email: " + currentEmployee.getEmail() + "\nPhone: " + currentEmployee.getPhone());
-            tvEmployeeSalary.setText("Salary: $" + currentEmployee.getSalary());
-            tvEmployeeStartDate.setText("Start Date: " + currentEmployee.getStartDate());
+            tvEmployeeId.setText(String.format("ID: %d", currentEmployee.getId()));
+            tvEmployeeContactInfo.setText(String.format("Email: %s\nPhone: %s", currentEmployee.getEmail(), currentEmployee.getPhone()));
+            tvEmployeeSalary.setText(String.format("Salary: $%.2f", currentEmployee.getSalary()));
+            tvEmployeeStartDate.setText(String.format("Start Date: %s", currentEmployee.getStartDate()));
         } else {
-            Toast.makeText(this, "Employee not found", Toast.LENGTH_SHORT).show();
+            showToast("Employee not found");
             finish();
         }
     }
 
-    // Navigate to EditEmployeeActivity
-    private void navigateToEditEmployee() {
-        Intent intent = new Intent(ViewEmployeeActivity.this, EditEmployeeActivity.class);
+    /**
+     * Navigate to ConfirmDeleteEmployeeActivity for delete confirmation.
+     */
+    private void navigateToConfirmDeleteEmployee() {
+        Intent intent = new Intent(this, ConfirmDeleteEmployeeActivity.class);
         intent.putExtra("EMPLOYEE_ID", employeeId);
         startActivity(intent);
     }
 
-    // Confirm delete employee
-    private void confirmDeleteEmployee() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Delete Employee");
-        builder.setMessage("Are you sure you want to delete this employee?");
-        builder.setPositiveButton("Yes", (dialog, which) -> {
-            int rowsDeleted = db.deleteEmployee(employeeId);
-            if (rowsDeleted > 0) {
-                Toast.makeText(ViewEmployeeActivity.this, "Employee deleted successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            } else {
-                Toast.makeText(ViewEmployeeActivity.this, "Error deleting employee", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setNegativeButton("No", null);
-        builder.show();
+    /**
+     * Navigate to EditEmployeeActivity to edit the current employee's details.
+     */
+    private void navigateToEditEmployee() {
+        Intent intent = new Intent(this, EditEmployeeActivity.class);
+        intent.putExtra("EMPLOYEE_ID", employeeId);
+        startActivity(intent);
+    }
+
+    /**
+     * Utility method to show toast messages.
+     *
+     * @param message The message to display.
+     */
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        // Refresh employee data when returning to this activity
         loadEmployeeData(employeeId);
     }
 }

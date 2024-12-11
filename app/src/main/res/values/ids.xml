@@ -86,6 +86,7 @@
     <item name="etSalary" type="id" />
     <item name="employeeid" type="id" />
     <item name="etid" type="id" />
+    <item name="tvTitle" type="id" />
 
 
 

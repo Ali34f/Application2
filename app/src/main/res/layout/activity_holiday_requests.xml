@@ -88,7 +88,7 @@
                         android:id="@+id/requestName1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/rosie_cole"
+                        android:text="@string/michael_brown"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@android:color/black"

@@ -56,7 +56,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:contentDescription="@string/employee_image_pro"
-            android:src="@drawable/ic_employee_image6"
+            android:src="@drawable/ic_profile_pic"
             android:layout_gravity="center"
             android:layout_marginEnd="16dp"
             android:scaleType="centerCrop"
