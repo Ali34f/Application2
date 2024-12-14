@@ -3,30 +3,22 @@ package com.example.application2;
 import java.util.Objects;
 
 /**
- * Represents an Employee entity with details such as name, position, email, phone, salary, and start date.
+ * Represents an Employee entity with details such as name, position, email, phone, salary, start date, and password.
  */
 public class Employee {
 
-    private int id;           // Unique identifier for the employee
-    private String name;      // Employee's full name
-    private String position;  // Job position/title
-    private String email;     // Employee's email address
-    private String phone;     // Employee's phone number
-    private double salary;    // Employee's salary
-    private String startDate; // Start date of employment
+    // Fields
+    private int id;
+    private String name;
+    private String position;
+    private String email;
+    private String phone;
+    private double salary;
+    private String startDate;
+    private String password;
 
-    /**
-     * Constructor for an existing employee (with ID).
-     *
-     * @param id        Unique identifier for the employee.
-     * @param name      Employee's full name.
-     * @param position  Job position/title.
-     * @param email     Employee's email address.
-     * @param phone     Employee's phone number.
-     * @param salary    Employee's salary.
-     * @param startDate Start date of employment.
-     */
-    public Employee(int id, String name, String position, String email, String phone, double salary, String startDate) {
+    // Constructor for existing employee (with ID and password)
+    public Employee(int id, String name, String position, String email, String phone, double salary, String startDate, String password) {
         this.id = id;
         this.name = validateName(name);
         this.position = validatePosition(position);
@@ -34,25 +26,18 @@ public class Employee {
         this.phone = validatePhone(phone);
         this.salary = validateSalary(salary);
         this.startDate = validateStartDate(startDate);
+        this.password = password;
     }
 
-    /**
-     * Constructor for a new employee (without ID).
-     *
-     * @param name      Employee's full name.
-     * @param position  Job position/title.
-     * @param email     Employee's email address.
-     * @param phone     Employee's phone number.
-     * @param salary    Employee's salary.
-     * @param startDate Start date of employment.
-     */
-    public Employee(String name, String position, String email, String phone, double salary, String startDate) {
+    // Constructor for new employee (without ID)
+    public Employee(String name, String position, String email, String phone, double salary, String startDate, String password) {
         this.name = validateName(name);
         this.position = validatePosition(position);
         this.email = validateEmail(email);
         this.phone = validatePhone(phone);
         this.salary = validateSalary(salary);
         this.startDate = validateStartDate(startDate);
+        this.password = password;
     }
 
     // Getters
@@ -84,8 +69,20 @@ public class Employee {
         return startDate;
     }
 
-    // Validation Methods
+    public String getPassword() {
+        return password;
+    }
 
+    // Setters
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Validation Methods
     private String validateName(String name) {
         return (name != null && !name.trim().isEmpty()) ? name.trim() : "Unknown Name";
     }
@@ -105,18 +102,17 @@ public class Employee {
         if (phone != null && phone.matches("^[+]?[0-9\\s\\-()]{10,15}$")) {
             return phone.trim();
         }
-        return "000-000-0000"; // Fallback default phone number
+        return "000-000-0000";
     }
 
     private double validateSalary(double salary) {
-        return Math.max(salary, 0); // Ensure salary is not negative
+        return Math.max(salary, 0);
     }
 
     private String validateStartDate(String startDate) {
         return (startDate != null && !startDate.trim().isEmpty()) ? startDate.trim() : "Unknown Start Date";
     }
 
-    // toString method for debugging and logging
     @Override
     public String toString() {
         return "Employee{" +
@@ -127,10 +123,9 @@ public class Employee {
                 ", phone='" + phone + '\'' +
                 ", salary=" + salary +
                 ", startDate='" + startDate + '\'' +
+                ", password='" + (password != null ? "****" : null) + '\'' +
                 '}';
     }
-
-    // Equals and hashCode methods for proper comparison and hashing
 
     @Override
     public boolean equals(Object o) {

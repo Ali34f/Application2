@@ -46,7 +46,7 @@
             android:id="@+id/ProfileImage"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/ic_employee_image4"
+            android:src="@drawable/ic_profile_pic"
             android:contentDescription="@string/profile_picture"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="16dp"

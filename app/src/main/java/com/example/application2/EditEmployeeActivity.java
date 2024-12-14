@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+/**
+ * Activity for editing an employee's details.
+ */
 public class EditEmployeeActivity extends Activity {
 
     private EditText editName, editPosition, editID, editPhoneNumber, editEmailAddress;
@@ -59,13 +62,8 @@ public class EditEmployeeActivity extends Activity {
      * Set button click actions for back, cancel, and confirm.
      */
     private void setButtonActions() {
-        // Back button action
-        btnBack.setOnClickListener(v -> navigateBackToViewEmployee());
-
-        // Cancel button action
+        btnBack.setOnClickListener(v -> finish());
         btnCancel.setOnClickListener(v -> finish());
-
-        // Confirm button action
         btnConfirm.setOnClickListener(v -> updateEmployee());
     }
 
@@ -89,7 +87,7 @@ public class EditEmployeeActivity extends Activity {
     }
 
     /**
-     * Update the employee's details in the database.
+     * Update the employee's details in the database and navigate to EditEmployeeConfirmActivity.
      */
     private void updateEmployee() {
         String name = editName.getText().toString().trim();
@@ -102,26 +100,23 @@ public class EditEmployeeActivity extends Activity {
             return;
         }
 
-        Employee updatedEmployee = new Employee(employeeId, name, position, email, phone, 0.0, "");
+        // Create an updated Employee object
+        Employee updatedEmployee = new Employee(employeeId, name, position, email, phone, 0.0, "", "");
 
         int rowsAffected = dbHelper.updateEmployee(updatedEmployee);
-
         if (rowsAffected > 0) {
             showToast("Employee updated successfully");
-            Intent intent = new Intent(this, ViewEmployeeActivity.class);
-            intent.putExtra("EMPLOYEE_ID", employeeId);
-            startActivity(intent);
-            finish();
+            navigateToEditEmployeeConfirm();
         } else {
             showToast("Error updating employee");
         }
     }
 
     /**
-     * Navigate back to the ViewEmployeeActivity.
+     * Navigate to EditEmployeeConfirmActivity after a successful update.
      */
-    private void navigateBackToViewEmployee() {
-        Intent intent = new Intent(this, ViewEmployeeActivity.class);
+    private void navigateToEditEmployeeConfirm() {
+        Intent intent = new Intent(EditEmployeeActivity.this, EditEmployeeConfirmActivity.class);
         intent.putExtra("EMPLOYEE_ID", employeeId);
         startActivity(intent);
         finish();

@@ -78,13 +78,8 @@ public class EmployeeManagementActivity extends AppCompatActivity {
      * Set button click listeners for navigation and sorting/filtering.
      */
     private void setButtonListeners() {
-        // Back button functionality
         btnBack.setOnClickListener(v -> navigateToDashboard());
-
-        // Add Employee button functionality
         btnAddEmployee.setOnClickListener(v -> navigateToAddEmployee());
-
-        // Sort/Filter button functionality (reload employees)
         btnSortFilter.setOnClickListener(v -> loadEmployeeData());
     }
 
@@ -105,15 +100,12 @@ public class EmployeeManagementActivity extends AppCompatActivity {
      * Load all employees from the database and display them in the RecyclerView.
      */
     private void loadEmployeeData() {
-        try {
-            employeeList = dbHelper.getAllEmployees();
-            if (employeeList.isEmpty()) {
-                showToast("No employees found");
-            }
-            employeeAdapter.updateEmployeeList(employeeList);
-        } catch (Exception e) {
-            showToast("Error loading employees: " + e.getMessage());
+        employeeList = dbHelper.getAllEmployees();
+        if (employeeList == null || employeeList.isEmpty()) {
+            showToast("No employees found");
+            employeeList = new ArrayList<>(); // Ensure the list is not null
         }
+        employeeAdapter.updateEmployeeList(employeeList);
     }
 
     /**
@@ -126,16 +118,13 @@ public class EmployeeManagementActivity extends AppCompatActivity {
             return;
         }
 
-        try {
-            List<Employee> filteredEmployees = dbHelper.searchEmployees(query);
-            if (filteredEmployees.isEmpty()) {
-                showToast("No matching employees found");
-            } else {
-                employeeAdapter.updateEmployeeList(filteredEmployees);
-                showToast(filteredEmployees.size() + " employees found");
-            }
-        } catch (Exception e) {
-            showToast("Error searching employees: " + e.getMessage());
+        List<Employee> filteredEmployees = dbHelper.searchEmployees(query);
+        if (filteredEmployees == null || filteredEmployees.isEmpty()) {
+            showToast("No matching employees found");
+            employeeAdapter.updateEmployeeList(new ArrayList<>());
+        } else {
+            employeeAdapter.updateEmployeeList(filteredEmployees);
+            showToast(filteredEmployees.size() + " employees found");
         }
     }
 

@@ -1,16 +1,26 @@
 package com.example.application2;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Activity to display the employee's profile details.
+ */
 public class EmployeeProfileActivity extends AppCompatActivity {
 
     private EditText nameField, positionField, idField, phoneField, emailField;
+    private TextView employeeNameTextView;
+    private ImageView btnBack;
+    private Button btnEditDetails;
+    private DatabaseHelper dbHelper;
+    private String employeeEmail;
+    private Employee loggedInEmployee;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +29,12 @@ public class EmployeeProfileActivity extends AppCompatActivity {
 
         // Initialize UI elements
         initializeUI();
+
+        // Initialize Database Helper
+        dbHelper = new DatabaseHelper(this);
+
+        // Get the logged-in employee's email from the intent
+        employeeEmail = getIntent().getStringExtra("EMPLOYEE_EMAIL");
 
         // Load and display employee details
         loadEmployeeDetails();
@@ -36,6 +52,9 @@ public class EmployeeProfileActivity extends AppCompatActivity {
         idField = findViewById(R.id.editTextId);
         phoneField = findViewById(R.id.editTextPhoneNumber);
         emailField = findViewById(R.id.editTextEmailAddress);
+        employeeNameTextView = findViewById(R.id.employeeName);
+        btnBack = findViewById(R.id.btnBack);
+        btnEditDetails = findViewById(R.id.btnEditDetails);
 
         // Disable editing for all fields
         disableEditing();
@@ -53,23 +72,32 @@ public class EmployeeProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Loads employee details from SharedPreferences and displays them.
+     * Loads employee details from the database and displays them.
      */
     private void loadEmployeeDetails() {
-        SharedPreferences prefs = getSharedPreferences("EmployeeDetails", MODE_PRIVATE);
+        if (employeeEmail == null) {
+            Toast.makeText(this, "No employee email provided", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
-        String name = prefs.getString("Name", getString(R.string.michael_brown)); // Default name
-        String position = prefs.getString("Position", getString(R.string.project_manager)); // Default position
-        String id = prefs.getString("ID Number", getString(R.string.id_number)); // Default ID
-        String phone = prefs.getString("Phone", getString(R.string.number4)); // Default phone
-        String email = prefs.getString("Email", getString(R.string.michaelbrown_company_com)); // Default email
+        // Fetch employee data from the database
+        loggedInEmployee = dbHelper.getEmployeeByEmail(employeeEmail);
 
-        // Set values to fields
-        nameField.setText(name);
-        positionField.setText(position);
-        idField.setText(id);
-        phoneField.setText(phone);
-        emailField.setText(email);
+        if (loggedInEmployee != null) {
+            // Populate the fields with employee details
+            nameField.setText(loggedInEmployee.getName());
+            positionField.setText(loggedInEmployee.getPosition());
+            idField.setText(String.valueOf(loggedInEmployee.getId()));
+            phoneField.setText(loggedInEmployee.getPhone());
+            emailField.setText(loggedInEmployee.getEmail());
+
+            // Set the employee name under the profile picture
+            employeeNameTextView.setText(loggedInEmployee.getName());
+        } else {
+            Toast.makeText(this, "Employee details not found", Toast.LENGTH_SHORT).show();
+            finish();
+        }
     }
 
     /**
@@ -77,17 +105,17 @@ public class EmployeeProfileActivity extends AppCompatActivity {
      */
     private void setupButtonListeners() {
         // Back button
-        ImageView btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(EmployeeProfileActivity.this, EmployeeDashboardActivity.class);
+            intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
             startActivity(intent);
             finish();
         });
 
         // Edit details button
-        Button btnEditDetails = findViewById(R.id.btnEditDetails);
         btnEditDetails.setOnClickListener(v -> {
             Intent intent = new Intent(EmployeeProfileActivity.this, EmployeeEditActivity.class);
+            intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
             startActivity(intent);
         });
     }

@@ -15,34 +15,41 @@ import java.util.Calendar;
 public class EmployeeHolidayRequestActivity extends AppCompatActivity {
 
     private EditText etStartDate, etEndDate;
+    private String employeeEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_holiday_request);
 
-        // Back button functionality
-        ImageView btnBack = findViewById(R.id.btnBack2);
-        btnBack.setOnClickListener(v -> {
-            Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeDashboardActivity.class);
-            startActivity(intent);
-            finish();
-        });
+        // Retrieve the logged-in employee's email from the intent
+        employeeEmail = getIntent().getStringExtra("EMPLOYEE_EMAIL");
 
         // Initialize views
-        etStartDate = findViewById(R.id.etStartDate);
-        etEndDate = findViewById(R.id.etEndDate);
-        EditText etReasonForLeave = findViewById(R.id.etReasonForLeave);
-        EditText etAdditionalComments = findViewById(R.id.etAdditionalComments);
-        Button btnSubmitRequest = findViewById(R.id.btnSubmitRequest);
+        initializeUI();
+
+        // Back button functionality
+        ImageView btnBack = findViewById(R.id.btnBack2);
+        btnBack.setOnClickListener(v -> navigateBackToDashboard());
 
         // Set up date picker for Start Date
         etStartDate.setOnClickListener(v -> showDatePickerDialog(etStartDate));
 
         // Set up date picker for End Date
         etEndDate.setOnClickListener(v -> showDatePickerDialog(etEndDate));
+    }
 
-        // Enter Details functionality
+    /**
+     * Initialize UI components.
+     */
+    private void initializeUI() {
+        etStartDate = findViewById(R.id.etStartDate);
+        etEndDate = findViewById(R.id.etEndDate);
+        EditText etReasonForLeave = findViewById(R.id.etReasonForLeave);
+        EditText etAdditionalComments = findViewById(R.id.etAdditionalComments);
+        Button btnSubmitRequest = findViewById(R.id.btnSubmitRequest);
+
+        // Submit request button functionality
         btnSubmitRequest.setOnClickListener(v -> {
             String reasonForLeave = etReasonForLeave.getText().toString().trim();
             String startDate = etStartDate.getText().toString().trim();
@@ -54,10 +61,21 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
             } else {
                 // Simulate saving data and navigate to the confirmation screen
                 Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeHolidayConfirmActivity.class);
+                intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
                 startActivity(intent);
                 finish();
             }
         });
+    }
+
+    /**
+     * Navigate back to the Employee Dashboard and pass the employee email.
+     */
+    private void navigateBackToDashboard() {
+        Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeDashboardActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -74,7 +92,7 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, year1, monthOfYear, dayOfMonth) -> {
-                    // Format the selected date and set it to the EditText
+
                     String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
                     editText.setText(selectedDate);
                 },

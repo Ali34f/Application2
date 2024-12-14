@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -25,9 +26,13 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private boolean isDarkModeEnabled, isEmailEnabled, isPushEnabled, isTwoFactorEnabled;
     private String selectedLanguage;
+    private String employeeEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        employeeEmail = getIntent().getStringExtra("EMPLOYEE_EMAIL");
+
         // Apply dark mode and language before setting content view
         applySavedPreferences();
 
@@ -35,17 +40,9 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_employee_settings);
 
         // Initialize views
-        backArrow = findViewById(R.id.backArrow);
-        switchDarkMode = findViewById(R.id.switchDarkMode);
-        switchEmailNotifications = findViewById(R.id.switchEmailNotifications);
-        switchPushNotifications = findViewById(R.id.switchPushNotifications);
-        switchTwoFactor = findViewById(R.id.switchTwoFactor);
-        spinnerLanguage = findViewById(R.id.spinnerLanguage);
-        btnSaveChanges = findViewById(R.id.btnSaveChanges);
-        btnChangePassword = findViewById(R.id.btnChangePassword);
+        initializeViews();
 
         // Load preferences
-        sharedPreferences = getSharedPreferences("EmployeeSettings", MODE_PRIVATE);
         loadPreferences();
 
         // Back button functionality
@@ -61,6 +58,9 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         btnChangePassword.setOnClickListener(v -> navigateToChangePassword());
     }
 
+    /**
+     * Apply saved preferences for dark mode and language.
+     */
     private void applySavedPreferences() {
         sharedPreferences = getSharedPreferences("EmployeeSettings", MODE_PRIVATE);
 
@@ -75,6 +75,23 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         applyLanguage(language);
     }
 
+    /**
+     * Initialize UI components.
+     */
+    private void initializeViews() {
+        backArrow = findViewById(R.id.backArrow);
+        switchDarkMode = findViewById(R.id.switchDarkMode);
+        switchEmailNotifications = findViewById(R.id.switchEmailNotifications);
+        switchPushNotifications = findViewById(R.id.switchPushNotifications);
+        switchTwoFactor = findViewById(R.id.switchTwoFactor);
+        spinnerLanguage = findViewById(R.id.spinnerLanguage);
+        btnSaveChanges = findViewById(R.id.btnSaveChanges);
+        btnChangePassword = findViewById(R.id.btnChangePassword);
+    }
+
+    /**
+     * Load saved preferences and update the UI.
+     */
     private void loadPreferences() {
         isDarkModeEnabled = sharedPreferences.getBoolean("darkMode", false);
         isEmailEnabled = sharedPreferences.getBoolean("emailNotifications", true);
@@ -90,6 +107,9 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         setupLanguageSpinner();
     }
 
+    /**
+     * Set up the language selection spinner.
+     */
     private void setupLanguageSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this, R.array.languages_array, android.R.layout.simple_spinner_item);
@@ -101,6 +121,9 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         spinnerLanguage.setSelection(position);
     }
 
+    /**
+     * Save changes to SharedPreferences.
+     */
     private void saveChanges() {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -125,12 +148,18 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         restartApp();
     }
 
+    /**
+     * Apply dark mode.
+     */
     private void applyDarkMode(boolean isEnabled) {
         AppCompatDelegate.setDefaultNightMode(
                 isEnabled ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO
         );
     }
 
+    /**
+     * Apply selected language.
+     */
     private void applyLanguage(String language) {
         Locale locale;
         switch (language) {
@@ -157,20 +186,32 @@ public class EmployeeSettingsActivity extends AppCompatActivity {
         getResources().updateConfiguration(config, getResources().getDisplayMetrics());
     }
 
+    /**
+     * Navigate back to the Employee Dashboard and pass the employee email.
+     */
     private void navigateToDashboard() {
         Intent intent = new Intent(EmployeeSettingsActivity.this, EmployeeDashboardActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
     }
 
+    /**
+     * Navigate to the Change Password screen.
+     */
     private void navigateToChangePassword() {
         Intent intent = new Intent(EmployeeSettingsActivity.this, EmployeeRestActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
         startActivity(intent);
     }
 
+    /**
+     * Restart the app to apply changes globally.
+     */
     private void restartApp() {
         Intent intent = new Intent(getApplicationContext(), EmployeeDashboardActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
         finish();
