@@ -27,8 +27,7 @@
     <item name="pageTitle" type="id" />
     <item name="reasonForLeaveHeader" type="id" />
     <item name="etReasonForLeave" type="id" />
-    <item name="startDateHeader" type="id" />
-    <item name="etStartDate" type="id" />
+    <item name="BeginningDateHeader" type="id" />
     <item name="etEndDate" type="id" />
     <item name="additionalCommentsHeader" type="id" />
     <item name="endDateHeader" type="id" />
@@ -87,6 +86,7 @@
     <item name="employeeid" type="id" />
     <item name="etid" type="id" />
     <item name="tvTitle" type="id" />
+    <item name="etHolidayStartDate" type="id" />
 
 
 

@@ -91,8 +91,8 @@
     <string name="page_title">Holiday Request Details</string>
     <string name="reason_for_leave_header">Reason for Leave</string>
     <string name="reason_for_leave_hint">e.g Vacation</string>
-    <string name="start_date_header">Start Date</string>
-    <string name="start_date_hint">Select Start Date</string>
+    <string name="holiday_start_date">Holiday Start Date</string>
+    <string name="holiday_start_date_hint">Select Start Date</string>
     <string name="end_date_header">End Date</string>
     <string name="end_date_hint">Select End Date</string>
     <string name="additional_comments_header">Additional Comments</string>
@@ -126,7 +126,7 @@
     <string name="holiday_requests_details_title">Holiday Requests Details</string>
     <string name="reason_for_leave_header1">Reason for Leave</string>
     <string name="vacation">Vacation</string>
-    <string name="start_date">Start Date</string>
+    <string name="beginning_date">Start Date</string>
     <string name="random_date">20/12/2023</string>
     <string name="end_date">End Date</string>
     <string name="random_end_date">25/12/2023</string>

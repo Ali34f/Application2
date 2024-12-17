@@ -14,8 +14,9 @@ import java.util.Calendar;
 
 public class EmployeeHolidayRequestActivity extends AppCompatActivity {
 
-    private EditText etStartDate, etEndDate;
+    private EditText etHolidayStartDate, etEndDate, etReasonForLeave, etAdditionalComments;
     private String employeeEmail;
+    private DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +26,18 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         // Retrieve the logged-in employee's email from the intent
         employeeEmail = getIntent().getStringExtra("EMPLOYEE_EMAIL");
 
+        // Initialize DatabaseHelper
+        databaseHelper = new DatabaseHelper(this);
+
         // Initialize views
         initializeUI();
 
-        // Back button functionality
+        // Set up back button functionality
         ImageView btnBack = findViewById(R.id.btnBack2);
         btnBack.setOnClickListener(v -> navigateBackToDashboard());
 
-        // Set up date picker for Start Date
-        etStartDate.setOnClickListener(v -> showDatePickerDialog(etStartDate));
-
-        // Set up date picker for End Date
+        // Set up date pickers for Beginning Date and End Date
+        etHolidayStartDate.setOnClickListener(v -> showDatePickerDialog(etHolidayStartDate));
         etEndDate.setOnClickListener(v -> showDatePickerDialog(etEndDate));
     }
 
@@ -43,29 +45,55 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
      * Initialize UI components.
      */
     private void initializeUI() {
-        etStartDate = findViewById(R.id.etStartDate);
+        etHolidayStartDate = findViewById(R.id.etHolidayStartDate);
         etEndDate = findViewById(R.id.etEndDate);
-        EditText etReasonForLeave = findViewById(R.id.etReasonForLeave);
-        EditText etAdditionalComments = findViewById(R.id.etAdditionalComments);
+        etReasonForLeave = findViewById(R.id.etReasonForLeave);
+        etAdditionalComments = findViewById(R.id.etAdditionalComments);
         Button btnSubmitRequest = findViewById(R.id.btnSubmitRequest);
 
         // Submit request button functionality
-        btnSubmitRequest.setOnClickListener(v -> {
-            String reasonForLeave = etReasonForLeave.getText().toString().trim();
-            String startDate = etStartDate.getText().toString().trim();
-            String endDate = etEndDate.getText().toString().trim();
-            String additionalComments = etAdditionalComments.getText().toString().trim();
+        btnSubmitRequest.setOnClickListener(v -> submitHolidayRequest());
+    }
 
-            if (reasonForLeave.isEmpty() || startDate.isEmpty() || endDate.isEmpty()) {
-                Toast.makeText(this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
-            } else {
-                // Simulate saving data and navigate to the confirmation screen
-                Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeHolidayConfirmActivity.class);
-                intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
-                startActivity(intent);
-                finish();
-            }
-        });
+    /**
+     * Handle the submission of the holiday request.
+     */
+    private void submitHolidayRequest() {
+        String reasonForLeave = etReasonForLeave.getText().toString().trim();
+        String holidayStartDate = etHolidayStartDate.getText().toString().trim();
+        String endDate = etEndDate.getText().toString().trim();
+        String additionalComments = etAdditionalComments.getText().toString().trim();
+
+        if (reasonForLeave.isEmpty() || holidayStartDate.isEmpty() || endDate.isEmpty()) {
+            Toast.makeText(this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Validate that end date is not before the beginning date
+        if (!isEndDateValid(holidayStartDate, endDate)) {
+            Toast.makeText(this, "End date cannot be before the beginning date.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Create a HolidayRequest object
+        HolidayRequest holidayRequest = new HolidayRequest(
+                0, // Auto-increment ID
+                employeeEmail,
+                holidayStartDate,
+                endDate,
+                reasonForLeave,
+                additionalComments,
+                "PENDING"
+        );
+
+        // Save the holiday request to the database
+        long result = databaseHelper.addHolidayRequest(holidayRequest);
+        if (result != -1) {
+            Toast.makeText(this, "Holiday request submitted successfully.", Toast.LENGTH_SHORT).show();
+            navigateToConfirmationScreen();
+        } else {
+            Toast.makeText(this, "Error submitting holiday request.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -73,6 +101,16 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
      */
     private void navigateBackToDashboard() {
         Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeDashboardActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Navigate to the confirmation screen.
+     */
+    private void navigateToConfirmationScreen() {
+        Intent intent = new Intent(EmployeeHolidayRequestActivity.this, EmployeeHolidayConfirmActivity.class);
         intent.putExtra("EMPLOYEE_EMAIL", employeeEmail);
         startActivity(intent);
         finish();
@@ -91,9 +129,8 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
-                (view, year1, monthOfYear, dayOfMonth) -> {
-
-                    String selectedDate = dayOfMonth + "/" + (monthOfYear + 1) + "/" + year1;
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
                     editText.setText(selectedDate);
                 },
                 year,
@@ -102,5 +139,29 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         );
 
         datePickerDialog.show();
+    }
+
+    /**
+     * Validates that the end date is not before the beginning date.
+     *
+     * @param beginningDate The beginning date in DD/MM/YYYY format.
+     * @param endDate       The end date in DD/MM/YYYY format.
+     * @return True if the end date is valid, otherwise false.
+     */
+    private boolean isEndDateValid(String beginningDate, String endDate) {
+        try {
+            String[] start = beginningDate.split("/");
+            String[] end = endDate.split("/");
+
+            Calendar startCal = Calendar.getInstance();
+            startCal.set(Integer.parseInt(start[2]), Integer.parseInt(start[1]) - 1, Integer.parseInt(start[0]));
+
+            Calendar endCal = Calendar.getInstance();
+            endCal.set(Integer.parseInt(end[2]), Integer.parseInt(end[1]) - 1, Integer.parseInt(end[0]));
+
+            return !endCal.before(startCal);
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

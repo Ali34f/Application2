@@ -84,7 +84,7 @@
         android:id="@+id/startDateHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_date_header"
+        android:text="@string/holiday_start_date"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -94,11 +94,11 @@
 
     <!-- Start Date Input -->
     <EditText
-        android:id="@+id/etStartDate"
+        android:id="@+id/etHolidayStartDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="date"
-        android:hint="@string/start_date_hint"
+        android:hint="@string/beginning_date"
         android:background="@drawable/rounded_edittext"
         android:inputType="date"
         android:padding="12dp"
@@ -117,7 +117,7 @@
         android:textStyle="bold"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_below="@id/etStartDate" />
+        android:layout_below="@id/etHolidayStartDate" />
 
     <!-- End Date Input -->
     <EditText

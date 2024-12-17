@@ -91,6 +91,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/etReason"
             android:layout_width="237dp"
             android:layout_height="54dp"
             android:autofillHints="name"
@@ -105,11 +106,12 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/start_date"
+            android:text="@string/holiday_start_date"
             android:textSize="14sp"
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/etHolidayStartDate"
             android:layout_width="237dp"
             android:layout_height="54dp"
             android:autofillHints="date"
@@ -128,6 +130,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/etEndDate"
             android:layout_width="237dp"
             android:layout_height="54dp"
             android:autofillHints="date"
@@ -146,6 +149,7 @@
             android:textColor="@android:color/black"
             android:layout_marginBottom="4dp" />
         <EditText
+            android:id="@+id/etAdditionalComments"
             android:layout_width="337dp"
             android:layout_height="77dp"
             android:autofillHints="name"

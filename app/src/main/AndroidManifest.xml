@@ -51,6 +51,8 @@
         <activity android:name=".DeleteConfirmActivity" />
         <activity android:name=".EditEmployeeActivity" />
         <activity android:name=".EditEmployeeConfirmActivity" />
+        <activity android:name=".ViewHolidayRequestActivity" />
+
 
     </application>
 </manifest>

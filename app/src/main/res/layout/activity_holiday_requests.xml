@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@android:color/white"
     tools:context=".HolidayRequestActivity">
 
-    <!-- Header -->
+    <!-- Header Section -->
     <LinearLayout
         android:id="@+id/headerSection"
         android:layout_width="match_parent"
@@ -29,8 +29,7 @@
             android:gravity="center" />
     </LinearLayout>
 
-
-    <!-- Back Button Section -->
+    <!-- Back Button -->
     <ImageView
         android:id="@+id/backButton"
         android:layout_width="40dp"
@@ -54,198 +53,24 @@
         android:layout_marginTop="16dp"
         android:layout_below="@id/backButton" />
 
-    <!-- Content Section -->
-    <ScrollView
-        android:id="@+id/scrollView"
+    <!-- RecyclerView for Holiday Requests -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHolidayRequests"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/holidayRequestsTitle"
-        android:padding="16dp">
+        android:layout_marginTop="16dp"
+        android:padding="16dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <!-- Empty State View -->
+    <TextView
+        android:id="@+id/emptyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No holiday requests available."
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
-            <!-- Card 1 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_white_card_background"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp"
-                android:elevation="4dp">
-
-                <!-- Text Section -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/requestName1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/michael_brown"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestDate1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/request_20th_25th_dec"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestStatus1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/status_pending"
-                        android:textSize="14sp"
-                        android:textColor="#66BB6A"
-                        android:layout_marginBottom="4dp" />
-                </LinearLayout>
-
-                <!-- View Button -->
-                <Button
-                    android:id="@+id/viewButton1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/rounded_orange_button"
-                    android:padding="12dp"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textAllCaps="false"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
-
-            <!-- Card 2 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_white_card_background"
-                android:padding="16dp"
-                android:layout_marginBottom="16dp"
-                android:elevation="4dp">
-
-                <!-- Text Section -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/requestName2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/emma_watson"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestDate2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/request_1st_5th_jan"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestStatus2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/status_rejected"
-                        android:textSize="14sp"
-                        android:textColor="#E53935"
-                        android:layout_marginBottom="4dp" />
-                </LinearLayout>
-
-                <!-- View Button -->
-                <Button
-                    android:id="@+id/viewButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/rounded_orange_button"
-                    android:padding="12dp"
-                    android:textAllCaps="false"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
-
-            <!-- Card 3 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@drawable/rounded_white_card_background"
-                android:padding="16dp"
-                android:elevation="4dp">
-
-                <!-- Text Section -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/requestName3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/hamza_al_biruni"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestDate3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/request_15th_20th_feb"
-                        android:textSize="14sp"
-                        android:textColor="@android:color/black"
-                        android:layout_marginBottom="4dp" />
-
-                    <TextView
-                        android:id="@+id/requestStatus3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/status_pending"
-                        android:textSize="14sp"
-                        android:textColor="#66BB6A"
-                        android:layout_marginBottom="4dp" />
-                </LinearLayout>
-
-                <!-- View Button -->
-                <Button
-                    android:id="@+id/viewButton3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view"
-                    android:textSize="18sp"
-                    android:textColor="@android:color/white"
-                    android:background="@drawable/rounded_orange_button"
-                    android:padding="12dp"
-                    android:textAllCaps="false"
-                    android:layout_gravity="center_vertical" />
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

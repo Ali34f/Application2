@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database constants
     private static final String DATABASE_NAME = "employees.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 6;
 
     // Table Name and Columns
     private static final String TABLE_EMPLOYEES = "employees";
@@ -30,6 +30,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SALARY = "salary";
     private static final String COLUMN_START_DATE = "start_date";
     private static final String COLUMN_PASSWORD = "password";
+
+
+    // Holiday Requests Table Name and Columns
+    private static final String TABLE_HOLIDAY_REQUESTS = "holiday_requests";
+    private static final String COLUMN_REQUEST_ID = "request_id";
+    private static final String COLUMN_EMPLOYEE_NAME = "employee_name";
+    private static final String COLUMN_REASON = "reason";
+    private static final String COLUMN_HOLIDAY_START_DATE = "holiday_start_date";
+    private static final String COLUMN_END_DATE = "end_date";
+    private static final String COLUMN_ADDITIONAL_INFO = "additional_info";
+    private static final String COLUMN_STATUS = "status";
+
 
     // SQL statement to create the employees table
     private static final String CREATE_TABLE_EMPLOYEES =
@@ -43,6 +55,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_START_DATE + " TEXT, " +
                     COLUMN_PASSWORD + " TEXT NOT NULL)";
 
+
+    // SQL statement to create the holiday requests table
+    private static final String CREATE_TABLE_HOLIDAY_REQUESTS =
+            "CREATE TABLE " + TABLE_HOLIDAY_REQUESTS + " (" +
+                    COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_EMPLOYEE_NAME + " TEXT NOT NULL, " +
+                    COLUMN_HOLIDAY_START_DATE + " TEXT NOT NULL, " +
+                    COLUMN_END_DATE + " TEXT NOT NULL, " +
+                    COLUMN_ADDITIONAL_INFO + " TEXT, " +
+                    COLUMN_REASON + " TEXT NOT NULL, " +
+                    COLUMN_STATUS + " TEXT NOT NULL)";
+
+
+
     private static final String TAG = "DatabaseHelper";
 
     public DatabaseHelper(Context context) {
@@ -53,6 +79,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(CREATE_TABLE_EMPLOYEES);
+            db.execSQL(CREATE_TABLE_HOLIDAY_REQUESTS);
             Log.d(TAG, "Database created successfully.");
         } catch (SQLException e) {
             Log.e(TAG, "Error creating database: " + e.getMessage());
@@ -63,6 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_HOLIDAY_REQUESTS);
             onCreate(db);
             Log.d(TAG, "Database upgraded successfully.");
         } catch (SQLException e) {
@@ -311,5 +339,107 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_START_DATE, employee.getStartDate());
         values.put(COLUMN_PASSWORD, employee.getPassword());
         return values;
+    }
+
+    // ========================= Holiday Request Methods =========================
+
+    /**
+     * Add a new holiday request to the database.
+     */
+    public long addHolidayRequest(HolidayRequest holidayRequest) {
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_EMPLOYEE_NAME, holidayRequest.getEmployeeName());
+            values.put(COLUMN_HOLIDAY_START_DATE, holidayRequest.getHolidayStartDate());
+            values.put(COLUMN_END_DATE, holidayRequest.getEndDate());
+            values.put(COLUMN_REASON, holidayRequest.getReason());
+            values.put(COLUMN_ADDITIONAL_INFO, holidayRequest.getAdditionalInfo());
+            values.put(COLUMN_STATUS, holidayRequest.getStatus());
+
+            long result = db.insertOrThrow(TABLE_HOLIDAY_REQUESTS, null, values);
+            Log.d(TAG, "Holiday request added successfully for employee: " + holidayRequest.getEmployeeName());
+            return result;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error adding holiday request: " + e.getMessage());
+            return -1;
+        }
+    }
+
+
+    /**
+     * Retrieve all holiday requests from the database.
+     *
+     * @return A list of all holiday requests.
+     */
+    public List<HolidayRequest> getAllHolidayRequests() {
+        List<HolidayRequest> holidayRequests = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(TABLE_HOLIDAY_REQUESTS, null, null, null, null, null, COLUMN_REQUEST_ID + " ASC");
+
+            while (cursor != null && cursor.moveToNext()) {
+                holidayRequests.add(new HolidayRequest(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMPLOYEE_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOLIDAY_START_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                ));
+            }
+            Log.d(TAG, "All holiday requests fetched successfully.");
+        } catch (SQLException e) {
+            Log.e(TAG, "Error fetching holiday requests: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return holidayRequests;
+    }
+
+    /**
+     * Retrieve a specific holiday request by ID.
+     */
+    public HolidayRequest getHolidayRequestById(int id) {
+        try (SQLiteDatabase db = this.getReadableDatabase();
+             Cursor cursor = db.query(TABLE_HOLIDAY_REQUESTS, null, COLUMN_REQUEST_ID + " = ?",
+                     new String[]{String.valueOf(id)}, null, null, null)) {
+
+            if (cursor != null && cursor.moveToFirst()) {
+                return new HolidayRequest(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_REQUEST_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_EMPLOYEE_NAME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_HOLIDAY_START_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                );
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error fetching holiday request by ID: " + e.getMessage());
+        }
+        return null;
+    }
+
+    /**
+     * Update the status of a holiday request.
+     */
+    public int updateHolidayRequestStatus(int requestId, String newStatus) {
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_STATUS, newStatus);
+
+            int rowsUpdated = db.update(TABLE_HOLIDAY_REQUESTS, values, COLUMN_REQUEST_ID + " = ?", new String[]{String.valueOf(requestId)});
+            Log.d(TAG, "Holiday request with ID " + requestId + " updated to status: " + newStatus);
+            return rowsUpdated;
+        } catch (SQLException e) {
+            Log.e(TAG, "Error updating holiday request status: " + e.getMessage());
+            return 0;
+        }
     }
 }
