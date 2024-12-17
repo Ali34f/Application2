@@ -89,7 +89,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         btnNotifications.setOnClickListener(v -> navigateTo(EmployeeNotificationsActivity.class));
         btnSettings.setOnClickListener(v -> navigateTo(EmployeeSettingsActivity.class));
 
-        backToLogin.setOnClickListener(v -> navigateTo(EmployeeLoginActivity.class));
+        backToLogin.setOnClickListener(v -> navigateTo(MainActivity.class));
     }
 
     /**

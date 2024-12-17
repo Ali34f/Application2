@@ -40,18 +40,21 @@
         <activity android:name=".DashboardActivity" android:exported="true" />
         <activity android:name=".RestActivity" android:exported="true" />
         <activity android:name=".RestConfirmActivity" android:exported="true" />
-        <activity android:name=".EmployeeManagementActivity" />
-        <activity android:name=".HolidayRequestActivity" />
-        <activity android:name=".NotificationsActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".ViewEmployeeActivity" />
-        <activity android:name=".NewEmployeeDetailsActivity" />
-        <activity android:name=".NewEmployeeConfirmActivity" />
-        <activity android:name=".ConfirmDeleteEmployeeActivity" />
-        <activity android:name=".DeleteConfirmActivity" />
-        <activity android:name=".EditEmployeeActivity" />
-        <activity android:name=".EditEmployeeConfirmActivity" />
-        <activity android:name=".ViewHolidayRequestActivity" />
+        <activity android:name=".EmployeeManagementActivity" android:exported="true"/>
+        <activity android:name=".HolidayRequestActivity" android:exported="true" />
+        <activity android:name=".NotificationsActivity" android:exported="true"/>
+        <activity android:name=".SettingsActivity" android:exported="true" />
+        <activity android:name=".ViewEmployeeActivity" android:exported="true"/>
+        <activity android:name=".NewEmployeeDetailsActivity" android:exported="true" />
+        <activity android:name=".NewEmployeeConfirmActivity" android:exported="true"/>
+        <activity android:name=".ConfirmDeleteEmployeeActivity" android:exported="true"/>
+        <activity android:name=".DeleteConfirmActivity" android:exported="true"/>
+        <activity android:name=".EditEmployeeActivity" android:exported="true"/>
+        <activity android:name=".EditEmployeeConfirmActivity" android:exported="true" />
+        <activity android:name=".ViewHolidayRequestActivity" android:exported="true"/>
+        <activity android:name=".ApprovedHolidayActivity" android:exported="true"/>
+        <activity android:name=".DeniedHolidayActivity" android:exported="true"/>
+
 
 
     </application>

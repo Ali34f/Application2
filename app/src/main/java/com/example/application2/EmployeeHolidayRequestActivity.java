@@ -29,20 +29,12 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         // Initialize DatabaseHelper
         databaseHelper = new DatabaseHelper(this);
 
-        // Initialize views
+        // Initialize views and set up functionality
         initializeUI();
-
-        // Set up back button functionality
-        ImageView btnBack = findViewById(R.id.btnBack2);
-        btnBack.setOnClickListener(v -> navigateBackToDashboard());
-
-        // Set up date pickers for Beginning Date and End Date
-        etHolidayStartDate.setOnClickListener(v -> showDatePickerDialog(etHolidayStartDate));
-        etEndDate.setOnClickListener(v -> showDatePickerDialog(etEndDate));
     }
 
     /**
-     * Initialize UI components.
+     * Initialize UI components and set up listeners.
      */
     private void initializeUI() {
         etHolidayStartDate = findViewById(R.id.etHolidayStartDate);
@@ -50,9 +42,17 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         etReasonForLeave = findViewById(R.id.etReasonForLeave);
         etAdditionalComments = findViewById(R.id.etAdditionalComments);
         Button btnSubmitRequest = findViewById(R.id.btnSubmitRequest);
+        ImageView btnBack = findViewById(R.id.btnBack2);
 
-        // Submit request button functionality
+        // Set up date pickers for start date and end date fields
+        etHolidayStartDate.setOnClickListener(v -> showDatePickerDialog(etHolidayStartDate));
+        etEndDate.setOnClickListener(v -> showDatePickerDialog(etEndDate));
+
+        // Set up submit button functionality
         btnSubmitRequest.setOnClickListener(v -> submitHolidayRequest());
+
+        // Set up back button functionality
+        btnBack.setOnClickListener(v -> navigateBackToDashboard());
     }
 
     /**
@@ -64,14 +64,15 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         String endDate = etEndDate.getText().toString().trim();
         String additionalComments = etAdditionalComments.getText().toString().trim();
 
+        // Validate input fields
         if (reasonForLeave.isEmpty() || holidayStartDate.isEmpty() || endDate.isEmpty()) {
             Toast.makeText(this, "Please fill in all required fields.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Validate that end date is not before the beginning date
+        // Validate that end date is not before the start date
         if (!isEndDateValid(holidayStartDate, endDate)) {
-            Toast.makeText(this, "End date cannot be before the beginning date.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "End date cannot be before the start date.", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -83,7 +84,7 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
                 endDate,
                 reasonForLeave,
                 additionalComments,
-                "PENDING"
+                HolidayRequestStatus.PENDING // Use enum for status
         );
 
         // Save the holiday request to the database
@@ -92,7 +93,7 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
             Toast.makeText(this, "Holiday request submitted successfully.", Toast.LENGTH_SHORT).show();
             navigateToConfirmationScreen();
         } else {
-            Toast.makeText(this, "Error submitting holiday request.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error submitting holiday request. Please try again.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -130,7 +131,7 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(
                 this,
                 (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = selectedDay + "/" + (selectedMonth + 1) + "/" + selectedYear;
+                    String selectedDate = String.format("%02d/%02d/%04d", selectedDay, selectedMonth + 1, selectedYear);
                     editText.setText(selectedDate);
                 },
                 year,
@@ -142,15 +143,15 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
     }
 
     /**
-     * Validates that the end date is not before the beginning date.
+     * Validates that the end date is not before the start date.
      *
-     * @param beginningDate The beginning date in DD/MM/YYYY format.
-     * @param endDate       The end date in DD/MM/YYYY format.
+     * @param startDate The start date in DD/MM/YYYY format.
+     * @param endDate   The end date in DD/MM/YYYY format.
      * @return True if the end date is valid, otherwise false.
      */
-    private boolean isEndDateValid(String beginningDate, String endDate) {
+    private boolean isEndDateValid(String startDate, String endDate) {
         try {
-            String[] start = beginningDate.split("/");
+            String[] start = startDate.split("/");
             String[] end = endDate.split("/");
 
             Calendar startCal = Calendar.getInstance();
@@ -161,6 +162,7 @@ public class EmployeeHolidayRequestActivity extends AppCompatActivity {
 
             return !endCal.before(startCal);
         } catch (Exception e) {
+            Toast.makeText(this, "Invalid date format.", Toast.LENGTH_SHORT).show();
             return false;
         }
     }

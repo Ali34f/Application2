@@ -12,7 +12,7 @@ public class HolidayRequest {
     private String endDate;
     private String reason;
     private String additionalInfo;
-    private String status;
+    private HolidayRequestStatus status;
 
     /**
      * Default Constructor initializes fields with default values.
@@ -24,28 +24,29 @@ public class HolidayRequest {
         this.endDate = "";
         this.reason = "";
         this.additionalInfo = "";
-        this.status = "PENDING";
+        this.status = HolidayRequestStatus.PENDING;
     }
 
     /**
      * Parameterized Constructor to initialize all fields.
      *
-     * @param requestId       The ID of the holiday request.
-     * @param employeeName    The name of the employee.
-     * @param holidayStartDate       The start date of the holiday.
-     * @param endDate         The end date of the holiday.
-     * @param reason          The reason for the leave.
-     * @param additionalInfo  Additional information provided by the employee.
-     * @param status          The status of the request (e.g., PENDING, APPROVED, REJECTED).
+     * @param requestId        The ID of the holiday request.
+     * @param employeeName     The name of the employee.
+     * @param holidayStartDate The start date of the holiday.
+     * @param endDate          The end date of the holiday.
+     * @param reason           The reason for the leave.
+     * @param additionalInfo   Additional information provided by the employee.
+     * @param status           The status of the request (PENDING, APPROVED, REJECTED).
      */
-    public HolidayRequest(int requestId, String employeeName, String holidayStartDate, String endDate, String reason, String additionalInfo, String status) {
+    public HolidayRequest(int requestId, String employeeName, String holidayStartDate, String endDate,
+                          String reason, String additionalInfo, HolidayRequestStatus status) {
         this.requestId = requestId;
         this.employeeName = employeeName;
         this.holidayStartDate = holidayStartDate;
         this.endDate = endDate;
         this.reason = reason;
         this.additionalInfo = additionalInfo;
-        this.status = status != null ? status : "PENDING";
+        this.status = status != null ? status : HolidayRequestStatus.PENDING;
     }
 
     // Getters
@@ -73,7 +74,7 @@ public class HolidayRequest {
         return additionalInfo;
     }
 
-    public String getStatus() {
+    public HolidayRequestStatus getStatus() {
         return status;
     }
 
@@ -102,8 +103,8 @@ public class HolidayRequest {
         this.additionalInfo = additionalInfo;
     }
 
-    public void setStatus(String status) {
-        this.status = status != null ? status : "PENDING";
+    public void setStatus(HolidayRequestStatus status) {
+        this.status = status != null ? status : HolidayRequestStatus.PENDING;
     }
 
     /**
@@ -116,11 +117,11 @@ public class HolidayRequest {
         return "HolidayRequest{" +
                 "requestId=" + requestId +
                 ", employeeName='" + employeeName + '\'' +
-                ", startDate='" + holidayStartDate + '\'' +
+                ", holidayStartDate='" + holidayStartDate + '\'' +
                 ", endDate='" + endDate + '\'' +
                 ", reason='" + reason + '\'' +
                 ", additionalInfo='" + additionalInfo + '\'' +
-                ", status='" + status + '\'' +
+                ", status=" + status +
                 '}';
     }
 }

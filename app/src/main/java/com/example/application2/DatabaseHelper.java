@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database constants
     private static final String DATABASE_NAME = "employees.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
 
     // Table Name and Columns
     private static final String TABLE_EMPLOYEES = "employees";
@@ -354,7 +354,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_END_DATE, holidayRequest.getEndDate());
             values.put(COLUMN_REASON, holidayRequest.getReason());
             values.put(COLUMN_ADDITIONAL_INFO, holidayRequest.getAdditionalInfo());
-            values.put(COLUMN_STATUS, holidayRequest.getStatus());
+            values.put(COLUMN_STATUS, holidayRequest.getStatus().name());
 
             long result = db.insertOrThrow(TABLE_HOLIDAY_REQUESTS, null, values);
             Log.d(TAG, "Holiday request added successfully for employee: " + holidayRequest.getEmployeeName());
@@ -387,7 +387,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                        HolidayRequestStatus.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
                 ));
             }
             Log.d(TAG, "All holiday requests fetched successfully.");
@@ -417,7 +417,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
-                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS))
+                        HolidayRequestStatus.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
                 );
             }
         } catch (SQLException e) {

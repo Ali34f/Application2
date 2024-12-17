@@ -19,7 +19,7 @@ public class DashboardActivity extends AppCompatActivity {
         tvBackToLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, LoginActivity.class); // Redirect to LoginActivity
+                Intent intent = new Intent(DashboardActivity.this, MainActivity.class); // Redirect to LoginActivity
                 startActivity(intent);
                 finish(); // Optional: Close the DashboardActivity
             }
