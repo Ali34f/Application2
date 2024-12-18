@@ -190,6 +190,28 @@
                 android:enabled="false"
                 android:textColor="@android:color/black"
                 android:layout_marginBottom="16dp" />
+
+            <!-- Leaves -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leaves"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editTextLeaves"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="10"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="number"
+                android:padding="12dp"
+                android:enabled="false"
+                android:textColor="@android:color/black"
+                 android:layout_marginBottom="16dp" />
+
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

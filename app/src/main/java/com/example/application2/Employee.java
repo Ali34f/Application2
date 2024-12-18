@@ -3,7 +3,7 @@ package com.example.application2;
 import java.util.Objects;
 
 /**
- * Represents an Employee entity with details such as name, position, email, phone, salary, start date, and password.
+ * Represents an Employee entity with details such as name, position, email, phone, salary, start date, password, and leaves.
  */
 public class Employee {
 
@@ -16,9 +16,10 @@ public class Employee {
     private double salary;
     private String startDate;
     private String password;
+    private int leaves;
 
     // Constructor for existing employee (with ID and password)
-    public Employee(int id, String name, String position, String email, String phone, double salary, String startDate, String password) {
+    public Employee(int id, String name, String position, String email, String phone, double salary, String startDate, String password, int leaves) {
         this.id = id;
         this.name = validateName(name);
         this.position = validatePosition(position);
@@ -27,10 +28,11 @@ public class Employee {
         this.salary = validateSalary(salary);
         this.startDate = validateStartDate(startDate);
         this.password = password;
+        this.leaves = validateLeaves(leaves);
     }
 
     // Constructor for new employee (without ID)
-    public Employee(String name, String position, String email, String phone, double salary, String startDate, String password) {
+    public Employee(String name, String position, String email, String phone, double salary, String startDate, String password, int leaves) {
         this.name = validateName(name);
         this.position = validatePosition(position);
         this.email = validateEmail(email);
@@ -38,6 +40,7 @@ public class Employee {
         this.salary = validateSalary(salary);
         this.startDate = validateStartDate(startDate);
         this.password = password;
+        this.leaves = validateLeaves(leaves);
     }
 
     // Getters
@@ -73,6 +76,10 @@ public class Employee {
         return password;
     }
 
+    public int getLeaves() {
+        return leaves;
+    }
+
     // Setters
     public void setId(int id) {
         this.id = id;
@@ -80,6 +87,10 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setLeaves(int leaves) {
+        this.leaves = validateLeaves(leaves);
     }
 
     // Validation Methods
@@ -113,6 +124,10 @@ public class Employee {
         return (startDate != null && !startDate.trim().isEmpty()) ? startDate.trim() : "Unknown Start Date";
     }
 
+    private int validateLeaves(int leaves) {
+        return Math.max(leaves, 0);
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -123,6 +138,7 @@ public class Employee {
                 ", phone='" + phone + '\'' +
                 ", salary=" + salary +
                 ", startDate='" + startDate + '\'' +
+                ", leaves=" + leaves +
                 ", password='" + (password != null ? "****" : null) + '\'' +
                 '}';
     }

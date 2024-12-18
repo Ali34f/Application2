@@ -43,9 +43,13 @@ public class HolidayRequestAdapter extends RecyclerView.Adapter<HolidayRequestAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HolidayRequest request = holidayRequests.get(position);
 
-        // Bind data to the views
+
         holder.employeeName.setText(request.getEmployeeName());
+
+        // Format and display the request date range
         holder.requestDate.setText(String.format("Request: %s - %s", request.getHolidayStartDate(), request.getEndDate()));
+
+        // Format and display the request status
         holder.status.setText(String.format("Status: %s", request.getStatus()));
 
         // Set click listener for the view button

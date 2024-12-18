@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
  */
 public class EmployeeProfileActivity extends AppCompatActivity {
 
-    private EditText nameField, positionField, idField, phoneField, emailField;
+    private EditText nameField, positionField, idField, phoneField, emailField, leavesField;
     private TextView employeeNameTextView;
     private ImageView btnBack;
     private Button btnEditDetails;
@@ -52,6 +52,7 @@ public class EmployeeProfileActivity extends AppCompatActivity {
         idField = findViewById(R.id.editTextId);
         phoneField = findViewById(R.id.editTextPhoneNumber);
         emailField = findViewById(R.id.editTextEmailAddress);
+        leavesField = findViewById(R.id.editTextLeaves); // Added leaves field
         employeeNameTextView = findViewById(R.id.employeeName);
         btnBack = findViewById(R.id.btnBack);
         btnEditDetails = findViewById(R.id.btnEditDetails);
@@ -69,6 +70,7 @@ public class EmployeeProfileActivity extends AppCompatActivity {
         idField.setEnabled(false);
         phoneField.setEnabled(false);
         emailField.setEnabled(false);
+        leavesField.setEnabled(false); // Disable leaves field editing
     }
 
     /**
@@ -91,6 +93,7 @@ public class EmployeeProfileActivity extends AppCompatActivity {
             idField.setText(String.valueOf(loggedInEmployee.getId()));
             phoneField.setText(loggedInEmployee.getPhone());
             emailField.setText(loggedInEmployee.getEmail());
+            leavesField.setText(String.valueOf(loggedInEmployee.getLeaves())); // Set leaves field
 
             // Set the employee name under the profile picture
             employeeNameTextView.setText(loggedInEmployee.getName());

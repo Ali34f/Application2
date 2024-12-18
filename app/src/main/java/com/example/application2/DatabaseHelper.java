@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database constants
     private static final String DATABASE_NAME = "employees.db";
-    private static final int DATABASE_VERSION = 8;
+    private static final int DATABASE_VERSION = 9;
 
     // Table Name and Columns
     private static final String TABLE_EMPLOYEES = "employees";
@@ -30,6 +30,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SALARY = "salary";
     private static final String COLUMN_START_DATE = "start_date";
     private static final String COLUMN_PASSWORD = "password";
+
+    private static final String COLUMN_LEAVES = "leaves";
+
 
 
     // Holiday Requests Table Name and Columns
@@ -53,7 +56,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_PHONE + " TEXT, " +
                     COLUMN_SALARY + " REAL, " +
                     COLUMN_START_DATE + " TEXT, " +
-                    COLUMN_PASSWORD + " TEXT NOT NULL)";
+                    COLUMN_PASSWORD + " TEXT NOT NULL, " +
+                    COLUMN_LEAVES + " INTEGER DEFAULT 0)";
 
 
     // SQL statement to create the holiday requests table
@@ -116,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_PHONE, employee.getPhone());
             values.put(COLUMN_EMAIL, employee.getEmail());
             values.put(COLUMN_PASSWORD, employee.getPassword());
+            values.put(COLUMN_LEAVES, employee.getLeaves());
 
             int rowsAffected = db.update(TABLE_EMPLOYEES, values, COLUMN_EMAIL + " = ?", new String[]{employee.getEmail()});
             isUpdated = rowsAffected > 0;
@@ -322,7 +327,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PHONE)),
                 cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_SALARY)),
                 cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_START_DATE)),
-                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD))
+                cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD)),
+                cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LEAVES))
         );
     }
 
@@ -338,6 +344,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_SALARY, employee.getSalary());
         values.put(COLUMN_START_DATE, employee.getStartDate());
         values.put(COLUMN_PASSWORD, employee.getPassword());
+        values.put(COLUMN_LEAVES, employee.getLeaves());
         return values;
     }
 

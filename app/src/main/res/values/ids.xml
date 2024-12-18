@@ -87,6 +87,11 @@
     <item name="etid" type="id" />
     <item name="tvTitle" type="id" />
     <item name="etHolidayStartDate" type="id" />
+    <item name="btnQuickAdd" type="id" />
+    <item name="btnViewAll" type="id" />
+    <item name="etLeaves" type="id"/>
+
+
 
 
 

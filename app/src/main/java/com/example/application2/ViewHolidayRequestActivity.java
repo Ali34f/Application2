@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,6 +18,7 @@ public class ViewHolidayRequestActivity extends AppCompatActivity {
 
     private EditText etReason, etHolidayStartDate, etEndDate, etAdditionalInfo;
     private Button approveButton, rejectButton;
+    private ImageView backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,9 @@ public class ViewHolidayRequestActivity extends AppCompatActivity {
 
         // Reject button functionality
         rejectButton.setOnClickListener(v -> updateRequestStatus(HolidayRequestStatus.REJECTED));
+
+        // Back button functionality
+        backButton.setOnClickListener(v -> navigateBackToHolidayRequests());
     }
 
     /**
@@ -52,6 +57,7 @@ public class ViewHolidayRequestActivity extends AppCompatActivity {
         etAdditionalInfo = findViewById(R.id.etAdditionalComments);
         approveButton = findViewById(R.id.approveButton);
         rejectButton = findViewById(R.id.rejectButton);
+        backButton = findViewById(R.id.backButton5);
     }
 
     /**
@@ -98,6 +104,15 @@ public class ViewHolidayRequestActivity extends AppCompatActivity {
         } else {
             intent = new Intent(this, DeniedHolidayActivity.class);
         }
+        startActivity(intent);
+        finish();
+    }
+
+    /**
+     * Navigate back to the HolidayRequestActivity.
+     */
+    private void navigateBackToHolidayRequests() {
+        Intent intent = new Intent(this, HolidayRequestActivity.class);
         startActivity(intent);
         finish();
     }

@@ -21,7 +21,7 @@ import java.util.Calendar;
  */
 public class NewEmployeeDetailsActivity extends AppCompatActivity {
 
-    private EditText etName, etPosition, etPhoneNumber, etEmailAddress, etSalary, etStartDate;
+    private EditText etName, etPosition, etPhoneNumber, etEmailAddress, etSalary, etStartDate, etLeaves;
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
     private DatabaseHelper dbHelper;
@@ -38,17 +38,8 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         // Initialize Database Helper
         dbHelper = new DatabaseHelper(this);
 
-        // Back Button Click Listener
-        btnBack.setOnClickListener(v -> navigateToEmployeeManagement());
-
-        // Start Date Picker
-        etStartDate.setOnClickListener(v -> showDatePicker());
-
-        // Confirm Button Click Listener
-        btnConfirm.setOnClickListener(v -> saveEmployee());
-
-        // Cancel Button Click Listener
-        btnCancel.setOnClickListener(v -> finish());
+        // Set listeners
+        setupListeners();
     }
 
     /**
@@ -61,9 +52,27 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         etEmailAddress = findViewById(R.id.etEmailAddress);
         etSalary = findViewById(R.id.etSalary);
         etStartDate = findViewById(R.id.etStartDate);
+        etLeaves = findViewById(R.id.etLeaves);
         btnCancel = findViewById(R.id.btnCancel);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnBack = findViewById(R.id.btnBack);
+    }
+
+    /**
+     * Setup click listeners for buttons and date picker.
+     */
+    private void setupListeners() {
+        // Back Button Click Listener
+        btnBack.setOnClickListener(v -> navigateToEmployeeManagement());
+
+        // Start Date Picker
+        etStartDate.setOnClickListener(v -> showDatePicker());
+
+        // Confirm Button Click Listener
+        btnConfirm.setOnClickListener(v -> saveEmployee());
+
+        // Cancel Button Click Listener
+        btnCancel.setOnClickListener(v -> finish());
     }
 
     /**
@@ -86,7 +95,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, day1) -> {
-            String selectedDate = year1 + "-" + (month1 + 1) + "-" + day1;
+            String selectedDate = year1 + "-" + String.format("%02d", (month1 + 1)) + "-" + String.format("%02d", day1);
             etStartDate.setText(selectedDate);
         }, year, month, day);
         datePickerDialog.show();
@@ -102,19 +111,27 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         String email = etEmailAddress.getText().toString().trim();
         String salaryText = etSalary.getText().toString().trim();
         String startDate = etStartDate.getText().toString().trim();
+        String leavesText = etLeaves.getText().toString().trim();
 
         // Validate inputs
-        if (name.isEmpty() || position.isEmpty() || phoneNumber.isEmpty() ||
-                email.isEmpty() || salaryText.isEmpty() || startDate.isEmpty()) {
+        if (name.isEmpty() || position.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || salaryText.isEmpty() || startDate.isEmpty() || leavesText.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
         double salary;
+        int leaves;
         try {
             salary = Double.parseDouble(salaryText);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Invalid salary format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        try {
+            leaves = Integer.parseInt(leavesText);
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Invalid leaves format", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -123,7 +140,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         Log.d(TAG, "Generated Password: " + generatedPassword);
 
         // Create new Employee object
-        Employee employee = new Employee(name, position, email, phoneNumber, salary, startDate, generatedPassword);
+        Employee employee = new Employee(name, position, email, phoneNumber, salary, startDate, generatedPassword, leaves);
 
         // Add employee to the database
         long result = dbHelper.addEmployee(employee);

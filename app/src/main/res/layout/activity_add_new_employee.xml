@@ -196,6 +196,26 @@
                 android:padding="12dp"
                 android:layout_marginBottom="16dp" />
 
+            <!-- Holiday Entitlement Field -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/leaves"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:textColor="@android:color/black"
+                android:layout_marginTop="2dp" />
+
+            <EditText
+                android:id="@+id/etLeaves"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter holiday entitlement"
+                android:inputType="number"
+                android:padding="12dp"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginBottom="16dp" />
+
             <!-- Footer Buttons -->
             <LinearLayout
                 style="?android:attr/buttonBarStyle"

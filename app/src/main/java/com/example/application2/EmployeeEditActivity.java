@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class EmployeeEditActivity extends AppCompatActivity {
 
-    private EditText nameField, positionField, idField, phoneField, emailField;
-    private TextView employeeNameTextView; // TextView to display the employee's name under the profile picture
+    private EditText nameField, positionField, idField, phoneField, emailField, leavesField;
+    private TextView employeeNameTextView;
     private DatabaseHelper dbHelper;
     private String employeeEmail;
     private Employee loggedInEmployee;
@@ -58,7 +58,11 @@ public class EmployeeEditActivity extends AppCompatActivity {
         idField = findViewById(R.id.editTextId);
         phoneField = findViewById(R.id.editTextPhoneNumber);
         emailField = findViewById(R.id.editTextEmailAddress);
-        employeeNameTextView = findViewById(R.id.employeeName); // For displaying the employee's name
+        leavesField = findViewById(R.id.editTextLeaves);
+        employeeNameTextView = findViewById(R.id.employeeName);
+
+        // Disable editing for the leaves field
+        leavesField.setEnabled(false);
     }
 
     /**
@@ -75,6 +79,7 @@ public class EmployeeEditActivity extends AppCompatActivity {
                 idField.setText(String.valueOf(loggedInEmployee.getId()));
                 phoneField.setText(loggedInEmployee.getPhone());
                 emailField.setText(loggedInEmployee.getEmail());
+                leavesField.setText(String.valueOf(loggedInEmployee.getLeaves()));
 
                 // Set employee's name under the profile picture
                 employeeNameTextView.setText(loggedInEmployee.getName());
@@ -110,7 +115,8 @@ public class EmployeeEditActivity extends AppCompatActivity {
                     phone,
                     loggedInEmployee.getSalary(),    // Keep the existing salary
                     loggedInEmployee.getStartDate(), // Keep the existing start date
-                    loggedInEmployee.getPassword()   // Keep the existing password
+                    loggedInEmployee.getPassword(),  // Keep the existing password
+                    loggedInEmployee.getLeaves()     // Keep the existing leaves
             );
 
             boolean isSuccess = dbHelper.updateEmployeeProfile(updatedEmployee);

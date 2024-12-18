@@ -13,11 +13,11 @@ import android.widget.Toast;
  */
 public class EditEmployeeActivity extends Activity {
 
-    private EditText editName, editPosition, editID, editPhoneNumber, editEmailAddress;
+    private EditText editName, editPosition, editID, editPhoneNumber, editEmailAddress, editLeaves;
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
     private DatabaseHelper dbHelper;
-    private int employeeId; // The ID of the employee to be edited
+    private int employeeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,7 @@ public class EditEmployeeActivity extends Activity {
         editID = findViewById(R.id.editID);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editEmailAddress = findViewById(R.id.editEmailAddress);
+        editLeaves = findViewById(R.id.editLeaves); // New field for leaves
         btnCancel = findViewById(R.id.btnCancel);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnBack = findViewById(R.id.btnBack);
@@ -80,6 +81,7 @@ public class EditEmployeeActivity extends Activity {
             editID.setText(String.valueOf(employee.getId()));
             editPhoneNumber.setText(employee.getPhone());
             editEmailAddress.setText(employee.getEmail());
+            editLeaves.setText(String.valueOf(employee.getLeaves())); // Load leaves into the field
         } else {
             showToast("Employee not found");
             finish();
@@ -94,14 +96,23 @@ public class EditEmployeeActivity extends Activity {
         String position = editPosition.getText().toString().trim();
         String phone = editPhoneNumber.getText().toString().trim();
         String email = editEmailAddress.getText().toString().trim();
+        String leavesText = editLeaves.getText().toString().trim();
 
-        if (name.isEmpty() || position.isEmpty() || phone.isEmpty() || email.isEmpty()) {
+        if (name.isEmpty() || position.isEmpty() || phone.isEmpty() || email.isEmpty() || leavesText.isEmpty()) {
             showToast("Please fill in all fields");
             return;
         }
 
+        int leaves;
+        try {
+            leaves = Integer.parseInt(leavesText);
+        } catch (NumberFormatException e) {
+            showToast("Invalid number of leaves");
+            return;
+        }
+
         // Create an updated Employee object
-        Employee updatedEmployee = new Employee(employeeId, name, position, email, phone, 0.0, "", "");
+        Employee updatedEmployee = new Employee(employeeId, name, position, email, phone, 0.0, "", "", leaves);
 
         int rowsAffected = dbHelper.updateEmployee(updatedEmployee);
         if (rowsAffected > 0) {

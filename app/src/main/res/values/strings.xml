@@ -106,7 +106,7 @@
     <string name="request_holiday_button">Request Holiday</string>
     <string name="notifications_button">Notifications</string>
     <string name="settings_button">Settings</string>
-    <string name="holiday_remaining">8 days holiday remaining</string>
+    <string name="holiday_remaining">Loading holiday entitlement…</string>
     <string name="two_factor">Two-Factor Authentication</string>
     <string name="password_modification">Change Password</string>
     <string name="notificationTitle">Notifications</string>
@@ -194,6 +194,8 @@
     <string name="enter_start_date">Enter Start Date</string>
     <string name="id_number">8820</string>
     <string name="employee_id_number">ID number: 5786</string>
+    <string name="leaves">Leaves</string>
+    <string name="random_leaves">10</string>
 
 
 

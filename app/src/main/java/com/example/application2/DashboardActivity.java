@@ -16,53 +16,52 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Back to Login functionality
         TextView tvBackToLogin = findViewById(R.id.tvBackToLogin);
-        tvBackToLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, MainActivity.class); // Redirect to LoginActivity
-                startActivity(intent);
-                finish(); // Optional: Close the DashboardActivity
-            }
+        tvBackToLogin.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Optional: Close the DashboardActivity
         });
 
         // Employee Management Button
         LinearLayout btnEmployeeManagement = findViewById(R.id.btnEmployeeManagement);
-        btnEmployeeManagement.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, EmployeeManagementActivity.class);
-                startActivity(intent);
-            }
+        btnEmployeeManagement.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, EmployeeManagementActivity.class);
+            startActivity(intent);
         });
 
         // Holiday Requests Button
         LinearLayout btnHolidayRequests = findViewById(R.id.btnHolidayRequests);
-        btnHolidayRequests.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, HolidayRequestActivity.class);
-                startActivity(intent);
-            }
+        btnHolidayRequests.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, HolidayRequestActivity.class);
+            startActivity(intent);
         });
 
         // Notifications Button
         LinearLayout btnNotifications = findViewById(R.id.btnNotifications);
-        btnNotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, NotificationsActivity.class);
-                startActivity(intent);
-            }
+        btnNotifications.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, NotificationsActivity.class);
+            startActivity(intent);
         });
 
         // Settings Button
         LinearLayout btnSettings = findViewById(R.id.btnSettings);
-        btnSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DashboardActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            }
+        btnSettings.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
+
+        // Quick Add Button
+        LinearLayout btnQuickAdd = findViewById(R.id.btnQuickAdd);
+        btnQuickAdd.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, NewEmployeeDetailsActivity.class);
+            startActivity(intent);
+        });
+
+        // View All Button
+        LinearLayout btnViewAll = findViewById(R.id.btnViewAll);
+        btnViewAll.setOnClickListener(v -> {
+            Intent intent = new Intent(DashboardActivity.this, EmployeeManagementActivity.class);
+            startActivity(intent);
         });
     }
 }
