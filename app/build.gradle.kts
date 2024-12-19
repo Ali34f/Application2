@@ -39,11 +39,13 @@ android {
 }
 
 dependencies {
+    // Core Android dependencies
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
 
+    // Testing dependencies
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -52,4 +54,14 @@ dependencies {
     implementation("com.google.android.material:material:1.9.0")
     implementation("com.sun.mail:android-mail:1.6.7")
     implementation("com.sun.mail:android-activation:1.6.7")
+
+    // Retrofit dependencies
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    // OkHttp dependencies for logging
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
+    // Gson dependency for JSON parsing
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

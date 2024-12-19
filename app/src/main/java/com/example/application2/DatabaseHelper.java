@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.application2.model.Employee;
+
 import java.util.ArrayList;
 import java.util.List;
 

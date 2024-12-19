@@ -13,8 +13,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.application2.model.Employee;
+import com.example.application2.model.EmployeeApiModel;
+import com.example.application2.repository.EmployeeRepository;
+import com.example.application2.utils.EmployeeConverter;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity to manage employee-related operations such as viewing, adding, and searching employees.
@@ -28,22 +37,22 @@ public class EmployeeManagementActivity extends AppCompatActivity {
     private EmployeeAdapter employeeAdapter;
     private DatabaseHelper dbHelper;
     private List<Employee> employeeList;
+    private EmployeeRepository employeeRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_management);
 
-        // Initialize views
+        // Initialize views and helpers
         initializeViews();
-
-        // Initialize database helper
         dbHelper = new DatabaseHelper(this);
+        employeeRepository = new EmployeeRepository();
 
         // Set up RecyclerView
         setupRecyclerView();
 
-        // Load all employees
+        // Load employees from API and local database
         loadEmployeeData();
 
         // Set button click listeners
@@ -97,13 +106,43 @@ public class EmployeeManagementActivity extends AppCompatActivity {
     }
 
     /**
-     * Load all employees from the database and display them in the RecyclerView.
+     * Load employees from API and local database.
      */
     private void loadEmployeeData() {
+        // Load from API first
+        employeeRepository.getAllEmployees(new Callback<List<EmployeeApiModel>>() {
+            @Override
+            public void onResponse(Call<List<EmployeeApiModel>> call, Response<List<EmployeeApiModel>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Employee> apiEmployees = new ArrayList<>();
+                    for (EmployeeApiModel apiModel : response.body()) {
+                        apiEmployees.add(EmployeeConverter.toEmployee(apiModel));
+                    }
+                    employeeList = apiEmployees;
+                    employeeAdapter.updateEmployeeList(employeeList);
+                    showToast("Loaded employees from API");
+                } else {
+                    showToast("Failed to load employees from API. Loading local data...");
+                    loadLocalEmployeeData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<EmployeeApiModel>> call, Throwable t) {
+                showToast("API Error: " + t.getMessage() + ". Loading local data...");
+                loadLocalEmployeeData();
+            }
+        });
+    }
+
+    /**
+     * Load employees from the local database if API call fails.
+     */
+    private void loadLocalEmployeeData() {
         employeeList = dbHelper.getAllEmployees();
         if (employeeList == null || employeeList.isEmpty()) {
-            showToast("No employees found");
-            employeeList = new ArrayList<>(); // Ensure the list is not null
+            showToast("No employees found in the local database");
+            employeeList = new ArrayList<>();
         }
         employeeAdapter.updateEmployeeList(employeeList);
     }

@@ -8,6 +8,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.application2.model.Employee;
+
 /**
  * Activity to view, edit, and delete an employee's details.
  */

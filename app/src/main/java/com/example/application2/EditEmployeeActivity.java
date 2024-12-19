@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.application2.model.Employee;
+
 /**
  * Activity for editing an employee's details.
  */

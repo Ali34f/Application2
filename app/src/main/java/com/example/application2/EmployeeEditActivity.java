@@ -9,6 +9,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.application2.model.Employee;
+
 public class EmployeeEditActivity extends AppCompatActivity {
 
     private EditText nameField, positionField, idField, phoneField, emailField, leavesField;

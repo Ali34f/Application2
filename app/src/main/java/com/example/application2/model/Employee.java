@@ -1,4 +1,4 @@
-package com.example.application2;
+package com.example.application2.model;
 
 import java.util.Objects;
 
@@ -18,7 +18,19 @@ public class Employee {
     private String password;
     private int leaves;
 
-    // Constructor for existing employee (with ID and password)
+    /**
+     * Constructor for existing employee (with ID and password).
+     *
+     * @param id        The unique identifier of the employee.
+     * @param name      The full name of the employee.
+     * @param position  The position or department of the employee.
+     * @param email     The email address of the employee.
+     * @param phone     The phone number of the employee.
+     * @param salary    The salary of the employee.
+     * @param startDate The start date of employment.
+     * @param password  The password for the employee's account.
+     * @param leaves    The number of leaves available.
+     */
     public Employee(int id, String name, String position, String email, String phone, double salary, String startDate, String password, int leaves) {
         this.id = id;
         this.name = validateName(name);
@@ -31,7 +43,18 @@ public class Employee {
         this.leaves = validateLeaves(leaves);
     }
 
-    // Constructor for new employee (without ID)
+    /**
+     * Constructor for new employee (without ID).
+     *
+     * @param name      The full name of the employee.
+     * @param position  The position or department of the employee.
+     * @param email     The email address of the employee.
+     * @param phone     The phone number of the employee.
+     * @param salary    The salary of the employee.
+     * @param startDate The start date of employment.
+     * @param password  The password for the employee's account.
+     * @param leaves    The number of leaves available.
+     */
     public Employee(String name, String position, String email, String phone, double salary, String startDate, String password, int leaves) {
         this.name = validateName(name);
         this.position = validatePosition(position);

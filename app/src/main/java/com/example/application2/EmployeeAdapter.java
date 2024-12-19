@@ -12,11 +12,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.application2.model.Employee;
+import com.example.application2.model.EmployeeApiModel;
+import com.example.application2.utils.EmployeeConverter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adapter for displaying a list of employees in a RecyclerView.
+ * Adapter for displaying a list of employees in a RecyclerView from both local database and API.
  */
 public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.EmployeeViewHolder> {
 
@@ -69,13 +73,31 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
 
     /**
-     * Update the list dynamically (useful for filtering/searching).
+     * Update the list dynamically with local employees.
      *
      * @param newEmployeeList New list of employees to display.
      */
     public void updateEmployeeList(List<Employee> newEmployeeList) {
         this.employeeList = (newEmployeeList != null) ? newEmployeeList : new ArrayList<>();
         notifyDataSetChanged();
+    }
+
+    /**
+     * Update the list dynamically with API employees.
+     *
+     * @param apiEmployeeList New list of API employees to display.
+     */
+    public void updateApiEmployeeList(List<EmployeeApiModel> apiEmployeeList) {
+        if (apiEmployeeList == null) {
+            updateEmployeeList(new ArrayList<>());
+            return;
+        }
+
+        List<Employee> convertedList = new ArrayList<>();
+        for (EmployeeApiModel apiModel : apiEmployeeList) {
+            convertedList.add(EmployeeConverter.toEmployee(apiModel));
+        }
+        updateEmployeeList(convertedList);
     }
 
     /**
