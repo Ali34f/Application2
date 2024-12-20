@@ -1,6 +1,5 @@
 package com.example.application2;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -8,18 +7,27 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.application2.model.Employee;
+import com.example.application2.model.EmployeeApiModel;
+import com.example.application2.repository.EmployeeRepository;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity for editing an employee's details.
  */
-public class EditEmployeeActivity extends Activity {
+public class EditEmployeeActivity extends AppCompatActivity {
 
-    private EditText editName, editPosition, editID, editPhoneNumber, editEmailAddress, editLeaves;
+    private EditText editName, editPosition, editPhoneNumber, editEmailAddress, editLeaves;
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
-    private DatabaseHelper dbHelper;
     private int employeeId;
+    private EmployeeRepository employeeRepository;
+    private EmployeeApiModel currentEmployeeApiModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +37,8 @@ public class EditEmployeeActivity extends Activity {
         // Initialize views
         initializeViews();
 
-        // Initialize Database Helper
-        dbHelper = new DatabaseHelper(this);
+        // Initialize EmployeeRepository
+        employeeRepository = new EmployeeRepository();
 
         // Get employee details from the Intent
         employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
@@ -52,10 +60,9 @@ public class EditEmployeeActivity extends Activity {
     private void initializeViews() {
         editName = findViewById(R.id.editName);
         editPosition = findViewById(R.id.editPosition);
-        editID = findViewById(R.id.editID);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editEmailAddress = findViewById(R.id.editEmailAddress);
-        editLeaves = findViewById(R.id.editLeaves); // New field for leaves
+        editLeaves = findViewById(R.id.editLeaves);
         btnCancel = findViewById(R.id.btnCancel);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnBack = findViewById(R.id.btnBack);
@@ -71,27 +78,45 @@ public class EditEmployeeActivity extends Activity {
     }
 
     /**
-     * Load employee details into the form fields.
+     * Load employee details from the API and populate form fields.
      *
      * @param id The ID of the employee to load.
      */
     private void loadEmployeeDetails(int id) {
-        Employee employee = dbHelper.getEmployeeById(id);
-        if (employee != null) {
-            editName.setText(employee.getName());
-            editPosition.setText(employee.getPosition());
-            editID.setText(String.valueOf(employee.getId()));
-            editPhoneNumber.setText(employee.getPhone());
-            editEmailAddress.setText(employee.getEmail());
-            editLeaves.setText(String.valueOf(employee.getLeaves())); // Load leaves into the field
-        } else {
-            showToast("Employee not found");
-            finish();
-        }
+        employeeRepository.getEmployeeById(id, new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    populateEmployeeDetails(response.body());
+                } else {
+                    showToast("Employee not found or failed to load from API");
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                showToast("API Error: " + t.getMessage());
+                finish();
+            }
+        });
     }
 
     /**
-     * Update the employee's details in the database and navigate to EditEmployeeConfirmActivity.
+     * Populate the form fields with the employee's details.
+     *
+     * @param employee The Employee object containing the details.
+     */
+    private void populateEmployeeDetails(Employee employee) {
+        editName.setText(employee.getName());
+        editPosition.setText(employee.getPosition());
+        editPhoneNumber.setText(employee.getPhone());
+        editEmailAddress.setText(employee.getEmail());
+        editLeaves.setText(String.valueOf(employee.getLeaves()));
+    }
+
+    /**
+     * Update the employee's details using the API.
      */
     private void updateEmployee() {
         String name = editName.getText().toString().trim();
@@ -113,16 +138,34 @@ public class EditEmployeeActivity extends Activity {
             return;
         }
 
-        // Create an updated Employee object
-        Employee updatedEmployee = new Employee(employeeId, name, position, email, phone, 0.0, "", "", leaves);
+        // Create an updated EmployeeApiModel object
+        EmployeeApiModel updatedEmployee = new EmployeeApiModel(
+                name.split(" ")[0],                    // First name
+                name.contains(" ") ? name.split(" ")[1] : "",  // Last name
+                email,                                 // Email
+                position,                              // Position (department)
+                0.0,                                   // Placeholder salary (could be updated separately)
+                "",                                    // Placeholder joining date
+                leaves                                 // Leaves
+        );
 
-        int rowsAffected = dbHelper.updateEmployee(updatedEmployee);
-        if (rowsAffected > 0) {
-            showToast("Employee updated successfully");
-            navigateToEditEmployeeConfirm();
-        } else {
-            showToast("Error updating employee");
-        }
+        // Call API to update employee
+        employeeRepository.updateEmployee(employeeId, updatedEmployee, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    showToast("Employee updated successfully");
+                    navigateToEditEmployeeConfirm();
+                } else {
+                    showToast("Failed to update employee");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                showToast("API Error: " + t.getMessage());
+            }
+        });
     }
 
     /**

@@ -27,7 +27,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     private final Context context;
     private List<Employee> employeeList;
 
-    // Constructor
+    /**
+     * Constructor to initialize the adapter with a context and an employee list.
+     *
+     * @param context      The context of the calling activity.
+     * @param employeeList The list of employees to display.
+     */
     public EmployeeAdapter(Context context, List<Employee> employeeList) {
         this.context = context;
         this.employeeList = (employeeList != null) ? employeeList : new ArrayList<>();
@@ -73,7 +78,7 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.Employ
     }
 
     /**
-     * Update the list dynamically with local employees.
+     * Update the list dynamically with a new list of employees.
      *
      * @param newEmployeeList New list of employees to display.
      */

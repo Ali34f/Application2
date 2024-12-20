@@ -9,6 +9,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.application2.model.Employee;
+import com.example.application2.repository.EmployeeRepository;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity to view, edit, and delete an employee's details.
@@ -18,9 +23,8 @@ public class ViewEmployeeActivity extends AppCompatActivity {
     private TextView tvEmployeeName, tvEmployeePosition, tvEmployeeId, tvEmployeeContactInfo, tvEmployeeSalary, tvEmployeeStartDate;
     private Button btnEdit, btnDelete;
     private ImageView backButton;
-    private DatabaseHelper db;
     private int employeeId;
-    private Employee currentEmployee;
+    private EmployeeRepository employeeRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,8 @@ public class ViewEmployeeActivity extends AppCompatActivity {
         // Initialize views
         initializeViews();
 
-        // Initialize database helper
-        db = new DatabaseHelper(this);
+        // Initialize EmployeeRepository
+        employeeRepository = new EmployeeRepository();
 
         // Get the employee ID from the intent
         employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
@@ -77,24 +81,42 @@ public class ViewEmployeeActivity extends AppCompatActivity {
     }
 
     /**
-     * Load employee data from the database and populate views.
+     * Load employee data from the API and populate views.
      *
      * @param id The ID of the employee to load.
      */
     private void loadEmployeeData(int id) {
-        currentEmployee = db.getEmployeeById(id);
+        employeeRepository.getEmployeeById(id, new Callback<Employee>() {
+            @Override
+            public void onResponse(Call<Employee> call, Response<Employee> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    populateEmployeeDetails(response.body());
+                } else {
+                    showToast("Employee not found or failed to load from API");
+                    finish();
+                }
+            }
 
-        if (currentEmployee != null) {
-            tvEmployeeName.setText(currentEmployee.getName());
-            tvEmployeePosition.setText(currentEmployee.getPosition());
-            tvEmployeeId.setText(String.format("ID: %d", currentEmployee.getId()));
-            tvEmployeeContactInfo.setText(String.format("Email: %s\nPhone: %s", currentEmployee.getEmail(), currentEmployee.getPhone()));
-            tvEmployeeSalary.setText(String.format("Salary: $%.2f", currentEmployee.getSalary()));
-            tvEmployeeStartDate.setText(String.format("Start Date: %s", currentEmployee.getStartDate()));
-        } else {
-            showToast("Employee not found");
-            finish();
-        }
+            @Override
+            public void onFailure(Call<Employee> call, Throwable t) {
+                showToast("API Error: " + t.getMessage());
+                finish();
+            }
+        });
+    }
+
+    /**
+     * Populate the views with the employee details.
+     *
+     * @param employee The Employee object containing the details.
+     */
+    private void populateEmployeeDetails(Employee employee) {
+        tvEmployeeName.setText(employee.getName());
+        tvEmployeePosition.setText(employee.getPosition());
+        tvEmployeeId.setText(String.format("ID: %d", employee.getId()));
+        tvEmployeeContactInfo.setText(String.format("Email: %s\nPhone: %s", employee.getEmail(), employee.getPhone()));
+        tvEmployeeSalary.setText(String.format("Salary: $%.2f", employee.getSalary()));
+        tvEmployeeStartDate.setText(String.format("Start Date: %s", employee.getStartDate()));
     }
 
     /**

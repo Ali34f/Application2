@@ -14,9 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.application2.model.Employee;
-import com.example.application2.model.EmployeeApiModel;
 import com.example.application2.repository.EmployeeRepository;
-import com.example.application2.utils.EmployeeConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,15 +108,11 @@ public class EmployeeManagementActivity extends AppCompatActivity {
      */
     private void loadEmployeeData() {
         // Load from API first
-        employeeRepository.getAllEmployees(new Callback<List<EmployeeApiModel>>() {
+        employeeRepository.getAllEmployees(new Callback<List<Employee>>() {
             @Override
-            public void onResponse(Call<List<EmployeeApiModel>> call, Response<List<EmployeeApiModel>> response) {
+            public void onResponse(Call<List<Employee>> call, Response<List<Employee>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Employee> apiEmployees = new ArrayList<>();
-                    for (EmployeeApiModel apiModel : response.body()) {
-                        apiEmployees.add(EmployeeConverter.toEmployee(apiModel));
-                    }
-                    employeeList = apiEmployees;
+                    employeeList = response.body();
                     employeeAdapter.updateEmployeeList(employeeList);
                     showToast("Loaded employees from API");
                 } else {
@@ -128,7 +122,7 @@ public class EmployeeManagementActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<EmployeeApiModel>> call, Throwable t) {
+            public void onFailure(Call<List<Employee>> call, Throwable t) {
                 showToast("API Error: " + t.getMessage() + ". Loading local data...");
                 loadLocalEmployeeData();
             }

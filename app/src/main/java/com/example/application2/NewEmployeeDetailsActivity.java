@@ -11,10 +11,16 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.application2.model.EmployeeApiModel;
+import com.example.application2.repository.EmployeeRepository;
 import com.example.application2.utils.PasswordGenerator;
 import com.example.application2.utils.EmailSender;
 
 import java.util.Calendar;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Activity to add new employee details.
@@ -24,7 +30,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
     private EditText etName, etPosition, etPhoneNumber, etEmailAddress, etSalary, etStartDate, etLeaves;
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
-    private DatabaseHelper dbHelper;
+    private EmployeeRepository employeeRepository;
     private static final String TAG = "NewEmployeeDetails";
 
     @Override
@@ -35,8 +41,8 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         // Initialize views
         initializeViews();
 
-        // Initialize Database Helper
-        dbHelper = new DatabaseHelper(this);
+        // Initialize EmployeeRepository
+        employeeRepository = new EmployeeRepository();
 
         // Set listeners
         setupListeners();
@@ -105,7 +111,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
      * Save Employee Data and Navigate to Confirmation Screen.
      */
     private void saveEmployee() {
-        String name = etName.getText().toString().trim();
+        String fullName = etName.getText().toString().trim();
         String position = etPosition.getText().toString().trim();
         String phoneNumber = etPhoneNumber.getText().toString().trim();
         String email = etEmailAddress.getText().toString().trim();
@@ -114,7 +120,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         String leavesText = etLeaves.getText().toString().trim();
 
         // Validate inputs
-        if (name.isEmpty() || position.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || salaryText.isEmpty() || startDate.isEmpty() || leavesText.isEmpty()) {
+        if (fullName.isEmpty() || position.isEmpty() || phoneNumber.isEmpty() || email.isEmpty() || salaryText.isEmpty() || startDate.isEmpty() || leavesText.isEmpty()) {
             Toast.makeText(this, "Please fill out all fields", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -135,29 +141,40 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
             return;
         }
 
+        // Split full name into first name and last name
+        String[] nameParts = fullName.split("\\s+", 2);
+        String firstName = nameParts.length > 0 ? nameParts[0] : "";
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
         // Generate a random password
         String generatedPassword = PasswordGenerator.generatePassword();
         Log.d(TAG, "Generated Password: " + generatedPassword);
 
-        // Create new Employee object
-        Employee employee = new Employee(name, position, email, phoneNumber, salary, startDate, generatedPassword, leaves);
+        // Create new EmployeeApiModel object for API
+        EmployeeApiModel apiModel = new EmployeeApiModel(firstName, lastName, email, position, salary, startDate, leaves);
 
-        // Add employee to the database
-        long result = dbHelper.addEmployee(employee);
+        // Call API to add employee
+        employeeRepository.addEmployee(apiModel, new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    EmailSender.sendEmail(email, "Your Account Credentials",
+                            "Dear " + fullName + ",\n\nYour account has been created.\n\n" +
+                                    "Username: " + email + "\n" +
+                                    "Password: " + generatedPassword + "\n\n" +
+                                    "Please change your password upon first login.");
+                    Toast.makeText(NewEmployeeDetailsActivity.this, "Employee added successfully", Toast.LENGTH_SHORT).show();
+                    navigateToConfirmation();
+                } else {
+                    Toast.makeText(NewEmployeeDetailsActivity.this, "Failed to add employee via API", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        if (result != -1) {
-            // Send the generated password via email
-            EmailSender.sendEmail(email, "Your Account Credentials",
-                    "Dear " + name + ",\n\nYour account has been created.\n\n" +
-                            "Username: " + email + "\n" +
-                            "Password: " + generatedPassword + "\n\n" +
-                            "Please change your password upon first login.");
-
-            Toast.makeText(this, "Employee added successfully", Toast.LENGTH_SHORT).show();
-            navigateToConfirmation();
-        } else {
-            Toast.makeText(this, "Error adding employee", Toast.LENGTH_SHORT).show();
-        }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(NewEmployeeDetailsActivity.this, "API Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
