@@ -8,8 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.application2.model.Employee;
-
 /**
  * Activity for employee login.
  */
@@ -56,18 +54,21 @@ public class EmployeeLoginActivity extends AppCompatActivity {
         String email = usernameField.getText().toString().trim();
         String password = passwordField.getText().toString().trim();
 
-        if (email.isEmpty() || password.isEmpty()) {
-            showToast("Please enter both email and password");
+        // Validate input fields
+        if (email.isEmpty()) {
+            showToast("Email field cannot be empty");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            showToast("Password field cannot be empty");
             return;
         }
 
         // Validate the credentials
         if (validateCredentials(email, password)) {
             // Navigate to EmployeeDashboardActivity upon successful login
-            Intent intent = new Intent(EmployeeLoginActivity.this, EmployeeDashboardActivity.class);
-            intent.putExtra("EMPLOYEE_EMAIL", email);
-            startActivity(intent);
-            finish();
+            navigateToDashboard(email);
         } else {
             // Show an error message for invalid credentials
             showToast("Invalid email or password");
@@ -76,21 +77,25 @@ public class EmployeeLoginActivity extends AppCompatActivity {
 
     /**
      * Validate user credentials using the database.
+     *
+     * @param email    The email entered by the user.
+     * @param password The password entered by the user.
+     * @return True if the credentials are valid, false otherwise.
      */
     private boolean validateCredentials(String email, String password) {
-        Employee employee = dbHelper.getEmployeeByEmail(email);
+        return dbHelper.validateEmployeeLogin(email, password);
+    }
 
-        if (employee == null) {
-            showToast("Employee not found");
-            return false;
-        }
-
-        if (employee.getPassword() != null && employee.getPassword().equals(password)) {
-            return true;
-        } else {
-            showToast("Incorrect password");
-            return false;
-        }
+    /**
+     * Navigate to the Employee Dashboard Activity.
+     *
+     * @param email The email of the logged-in employee.
+     */
+    private void navigateToDashboard(String email) {
+        Intent intent = new Intent(EmployeeLoginActivity.this, EmployeeDashboardActivity.class);
+        intent.putExtra("EMPLOYEE_EMAIL", email);
+        startActivity(intent);
+        finish();
     }
 
     /**
@@ -101,8 +106,11 @@ public class EmployeeLoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     /**
      * Utility method to show toast messages.
+     *
+     * @param message The message to be displayed.
      */
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

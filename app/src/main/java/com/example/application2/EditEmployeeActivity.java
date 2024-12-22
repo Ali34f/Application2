@@ -2,6 +2,7 @@ package com.example.application2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -17,9 +18,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * Activity for editing an employee's details.
- */
 public class EditEmployeeActivity extends AppCompatActivity {
 
     private EditText editName, editPosition, editPhoneNumber, editEmailAddress, editLeaves;
@@ -27,20 +25,14 @@ public class EditEmployeeActivity extends AppCompatActivity {
     private ImageView btnBack;
     private int employeeId;
     private EmployeeRepository employeeRepository;
-    private EmployeeApiModel currentEmployeeApiModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_employee);
 
-        // Initialize views
         initializeViews();
-
-        // Initialize EmployeeRepository
         employeeRepository = new EmployeeRepository();
-
-        // Get employee details from the Intent
         employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
 
         if (employeeId != -1) {
@@ -50,13 +42,9 @@ public class EditEmployeeActivity extends AppCompatActivity {
             finish();
         }
 
-        // Set button click listeners
         setButtonActions();
     }
 
-    /**
-     * Initialize views from the layout.
-     */
     private void initializeViews() {
         editName = findViewById(R.id.editName);
         editPosition = findViewById(R.id.editPosition);
@@ -68,20 +56,12 @@ public class EditEmployeeActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
     }
 
-    /**
-     * Set button click actions for back, cancel, and confirm.
-     */
     private void setButtonActions() {
         btnBack.setOnClickListener(v -> finish());
         btnCancel.setOnClickListener(v -> finish());
         btnConfirm.setOnClickListener(v -> updateEmployee());
     }
 
-    /**
-     * Load employee details from the API and populate form fields.
-     *
-     * @param id The ID of the employee to load.
-     */
     private void loadEmployeeDetails(int id) {
         employeeRepository.getEmployeeById(id, new Callback<Employee>() {
             @Override
@@ -89,24 +69,21 @@ public class EditEmployeeActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     populateEmployeeDetails(response.body());
                 } else {
-                    showToast("Employee not found or failed to load from API");
+                    showToast("Failed to load employee details: " + response.message());
+                    Log.e("API Error", "Response: " + response.errorBody());
                     finish();
                 }
             }
 
             @Override
             public void onFailure(Call<Employee> call, Throwable t) {
-                showToast("API Error: " + t.getMessage());
+                showToast("Error loading employee: " + t.getMessage());
+                Log.e("API Error", "Throwable: ", t);
                 finish();
             }
         });
     }
 
-    /**
-     * Populate the form fields with the employee's details.
-     *
-     * @param employee The Employee object containing the details.
-     */
     private void populateEmployeeDetails(Employee employee) {
         editName.setText(employee.getName());
         editPosition.setText(employee.getPosition());
@@ -115,9 +92,6 @@ public class EditEmployeeActivity extends AppCompatActivity {
         editLeaves.setText(String.valueOf(employee.getLeaves()));
     }
 
-    /**
-     * Update the employee's details using the API.
-     */
     private void updateEmployee() {
         String name = editName.getText().toString().trim();
         String position = editPosition.getText().toString().trim();
@@ -138,39 +112,39 @@ public class EditEmployeeActivity extends AppCompatActivity {
             return;
         }
 
-        // Create an updated EmployeeApiModel object
         EmployeeApiModel updatedEmployee = new EmployeeApiModel(
-                name.split(" ")[0],                    // First name
-                name.contains(" ") ? name.split(" ")[1] : "",  // Last name
-                email,                                 // Email
-                position,                              // Position (department)
-                0.0,                                   // Placeholder salary (could be updated separately)
-                "",                                    // Placeholder joining date
-                leaves                                 // Leaves
+                name.split(" ")[0],
+                name.contains(" ") ? name.split(" ")[1] : "",
+                email,
+                position,
+                0.0, // Default salary for now
+                "",  // Empty joining date for now
+                leaves
         );
 
-        // Call API to update employee
+        Log.d("Update Request", "Updating Employee: " + updatedEmployee);
+
         employeeRepository.updateEmployee(employeeId, updatedEmployee, new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
                     showToast("Employee updated successfully");
+                    Log.d("Update Success", "Employee updated with ID: " + employeeId);
                     navigateToEditEmployeeConfirm();
                 } else {
-                    showToast("Failed to update employee");
+                    showToast("Failed to update employee: " + response.message());
+                    Log.e("API Error", "Response: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
-                showToast("API Error: " + t.getMessage());
+                showToast("Error updating employee: " + t.getMessage());
+                Log.e("API Error", "Throwable: ", t);
             }
         });
     }
 
-    /**
-     * Navigate to EditEmployeeConfirmActivity after a successful update.
-     */
     private void navigateToEditEmployeeConfirm() {
         Intent intent = new Intent(EditEmployeeActivity.this, EditEmployeeConfirmActivity.class);
         intent.putExtra("EMPLOYEE_ID", employeeId);
@@ -178,11 +152,6 @@ public class EditEmployeeActivity extends AppCompatActivity {
         finish();
     }
 
-    /**
-     * Utility method to show toast messages.
-     *
-     * @param message The message to display.
-     */
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }

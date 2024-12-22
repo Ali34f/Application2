@@ -36,6 +36,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_LEAVES = "leaves";
 
 
+    // Table Name and Columns for Admins
+    private static final String TABLE_ADMINS = "admins";
+    private static final String COLUMN_ADMIN_ID = "id";
+    private static final String COLUMN_ADMIN_USERNAME = "username";
+    private static final String COLUMN_ADMIN_PASSWORD = "password";
+
+
 
     // Holiday Requests Table Name and Columns
     private static final String TABLE_HOLIDAY_REQUESTS = "holiday_requests";
@@ -74,6 +81,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_STATUS + " TEXT NOT NULL)";
 
 
+    // SQL statement to create the admins table
+    private static final String CREATE_TABLE_ADMINS =
+            "CREATE TABLE " + TABLE_ADMINS + " (" +
+                    COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_ADMIN_USERNAME + " TEXT UNIQUE NOT NULL, " +
+                    COLUMN_ADMIN_PASSWORD + " TEXT NOT NULL)";
+
+
 
     private static final String TAG = "DatabaseHelper";
 
@@ -81,11 +96,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(CREATE_TABLE_EMPLOYEES);
-            db.execSQL(CREATE_TABLE_HOLIDAY_REQUESTS);
+            db.execSQL(CREATE_TABLE_ADMINS);
+            ensureDefaultAdminCredentials(db); // Add default admin credentials
             Log.d(TAG, "Database created successfully.");
         } catch (SQLException e) {
             Log.e(TAG, "Error creating database: " + e.getMessage());
@@ -96,12 +114,98 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         try {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
-            db.execSQL("DROP TABLE IF EXISTS " + TABLE_HOLIDAY_REQUESTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMINS);
             onCreate(db);
             Log.d(TAG, "Database upgraded successfully.");
         } catch (SQLException e) {
             Log.e(TAG, "Error upgrading database: " + e.getMessage());
         }
+    }
+
+    /**
+     * Ensures that default admin credentials exist in the database.
+     *
+     * @param db The writable database instance.
+     */
+    private void ensureDefaultAdminCredentials(SQLiteDatabase db) {
+        Cursor cursor = null;
+        try {
+            cursor = db.query(TABLE_ADMINS, null, COLUMN_ADMIN_USERNAME + " = ?", new String[]{"admin"}, null, null, null);
+            if (cursor == null || !cursor.moveToFirst()) {
+                ContentValues adminValues = new ContentValues();
+                adminValues.put(COLUMN_ADMIN_USERNAME, "admin");
+                adminValues.put(COLUMN_ADMIN_PASSWORD, "admin123");
+                db.insert(TABLE_ADMINS, null, adminValues);
+                Log.d(TAG, "Default admin credentials added.");
+            } else {
+                Log.d(TAG, "Default admin credentials already exist.");
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error ensuring default admin credentials: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+        }
+    }
+
+    /**
+     * Validate admin login credentials.
+     *
+     * @param username The admin username.
+     * @param password The admin password.
+     * @return True if the credentials are valid, false otherwise.
+     */
+    public boolean validateAdminLogin(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(TABLE_ADMINS,
+                    new String[]{COLUMN_ADMIN_ID}, // Only need ID for validation
+                    COLUMN_ADMIN_USERNAME + " = ? AND " + COLUMN_ADMIN_PASSWORD + " = ?",
+                    new String[]{username, password},
+                    null, null, null);
+
+            return cursor != null && cursor.moveToFirst();
+        } catch (SQLException e) {
+            Log.e(TAG, "Error validating admin login: " + e.getMessage());
+            return false;
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+    }
+
+
+    /**
+     * Update the password for an employee based on their email.
+     *
+     * @param email       The email of the employee.
+     * @param newPassword The new password to set.
+     * @return True if the update was successful, false otherwise.
+     */
+    public boolean updatePasswordByEmail(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        boolean isUpdated = false;
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_PASSWORD, newPassword);
+
+            int rowsAffected = db.update(TABLE_EMPLOYEES, values, COLUMN_EMAIL + " = ?", new String[]{email});
+            isUpdated = rowsAffected > 0;
+
+            if (isUpdated) {
+                Log.d("DatabaseHelper", "Password updated successfully for email: " + email);
+            } else {
+                Log.d("DatabaseHelper", "Email not found: " + email);
+            }
+        } catch (SQLException e) {
+            Log.e("DatabaseHelper", "Error updating password: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+        return isUpdated;
     }
 
 
@@ -350,7 +454,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return values;
     }
 
-    // ========================= Holiday Request Methods =========================
+    // ========================= Holiday Request Management =========================
 
     /**
      * Add a new holiday request to the database.
@@ -451,4 +555,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return 0;
         }
     }
+
+    /**
+     * Validates employee login credentials.
+     *
+     * @param email    The email provided by the employee.
+     * @param password The plain-text password provided by the employee.
+     * @return True if credentials are valid, false otherwise.
+     */
+    public boolean validateEmployeeLogin(String email, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.query(TABLE_EMPLOYEES,
+                    new String[]{COLUMN_PASSWORD}, // Retrieve only the password column
+                    COLUMN_EMAIL + " = ?",         // WHERE clause
+                    new String[]{email},           // WHERE arguments
+                    null, null, null);
+
+            if (cursor != null && cursor.moveToFirst()) {
+                String storedPassword = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PASSWORD));
+                return storedPassword != null && storedPassword.equals(password);
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error validating employee login: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+        return false;
+    }
+
 }

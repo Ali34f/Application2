@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.application2.model.Employee;
 import com.example.application2.model.EmployeeApiModel;
 import com.example.application2.repository.EmployeeRepository;
 import com.example.application2.utils.PasswordGenerator;
@@ -31,6 +32,7 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
     private EmployeeRepository employeeRepository;
+    private DatabaseHelper databaseHelper;
     private static final String TAG = "NewEmployeeDetails";
 
     @Override
@@ -41,8 +43,9 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
         // Initialize views
         initializeViews();
 
-        // Initialize EmployeeRepository
+        // Initialize EmployeeRepository and DatabaseHelper
         employeeRepository = new EmployeeRepository();
+        databaseHelper = new DatabaseHelper(this);
 
         // Set listeners
         setupListeners();
@@ -158,13 +161,33 @@ public class NewEmployeeDetailsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {
-                    EmailSender.sendEmail(email, "Your Account Credentials",
-                            "Dear " + fullName + ",\n\nYour account has been created.\n\n" +
-                                    "Username: " + email + "\n" +
-                                    "Password: " + generatedPassword + "\n\n" +
-                                    "Please change your password upon first login.");
-                    Toast.makeText(NewEmployeeDetailsActivity.this, "Employee added successfully", Toast.LENGTH_SHORT).show();
-                    navigateToConfirmation();
+                    // Store employee in the local database
+                    Employee localEmployee = new Employee(
+                            0, // ID will be auto-incremented locally
+                            fullName,
+                            position,
+                            email,
+                            phoneNumber,
+                            salary,
+                            startDate,
+                            generatedPassword,
+                            leaves
+                    );
+
+                    long result = databaseHelper.addEmployee(localEmployee);
+                    if (result != -1) {
+                        // Send email with login credentials
+                        EmailSender.sendEmail(email, "Your Account Credentials",
+                                "Dear " + fullName + ",\n\nYour account has been created.\n\n" +
+                                        "Username: " + email + "\n" +
+                                        "Password: " + generatedPassword + "\n\n" +
+                                        "Please change your password upon first login.");
+
+                        Toast.makeText(NewEmployeeDetailsActivity.this, "Employee added successfully", Toast.LENGTH_SHORT).show();
+                        navigateToConfirmation();
+                    } else {
+                        Toast.makeText(NewEmployeeDetailsActivity.this, "Failed to save employee locally", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Toast.makeText(NewEmployeeDetailsActivity.this, "Failed to add employee via API", Toast.LENGTH_SHORT).show();
                 }

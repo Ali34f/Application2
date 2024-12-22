@@ -47,6 +47,29 @@
 
         <!-- Confirm Username Label -->
         <TextView
+            android:id="@+id/txtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:layout_marginBottom="4dp" />
+
+        <EditText
+            android:id="@+id/txtEmailField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter Email"
+            android:background="@drawable/rounded_edittext"
+            android:padding="12dp"
+            android:inputType="textEmailAddress"
+            android:layout_marginBottom="16dp" />
+
+
+        <!-- Confirm Username Label -->
+        <TextView
             android:id="@+id/txtNewPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
