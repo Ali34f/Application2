@@ -90,6 +90,13 @@
     <item name="btnQuickAdd" type="id" />
     <item name="btnViewAll" type="id" />
     <item name="etLeaves" type="id"/>
+    <item name="employeeId" type="id"/>
+    <item name="contactInfoHeading" type="id"/>
+    <item name="employeeEmail" type="id"/>
+    <item name="employeePhone" type="id"/>
+    <item name="employeeSalary" type="id"/>
+    <item name="employeeStartDate" type="id"/>
+
 
 
 
