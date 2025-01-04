@@ -15,6 +15,11 @@ import com.example.application2.model.Employee;
 import com.example.application2.model.EmployeeApiModel;
 import com.example.application2.repository.EmployeeRepository;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -125,13 +130,19 @@ public class EditEmployeeActivity extends AppCompatActivity {
             return;
         }
 
+        String formattedDate = formatDate(startDate);
+        if (formattedDate == null) {
+            showToast("Invalid date format. Please use yyyy-MM-dd");
+            return;
+        }
+
         EmployeeApiModel updatedEmployee = new EmployeeApiModel(
-                name.split(" ")[0],
-                name.contains(" ") ? name.split(" ")[1] : "",
+                name, // Full name
+                "", // No split
                 email,
                 position,
                 salary,
-                startDate,
+                formattedDate,
                 leaves
         );
 
@@ -156,6 +167,17 @@ public class EditEmployeeActivity extends AppCompatActivity {
                 Log.e("API Error", "Throwable: ", t);
             }
         });
+    }
+
+    private String formatDate(String date) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            Date parsedDate = inputFormat.parse(date);
+            return inputFormat.format(parsedDate);
+        } catch (ParseException e) {
+            Log.e("Date Error", "Invalid date format: " + date, e);
+            return null;
+        }
     }
 
     private void navigateToEditEmployeeConfirm() {

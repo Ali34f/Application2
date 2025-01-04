@@ -104,7 +104,7 @@ public class EmployeeManagementActivity extends AppCompatActivity {
     }
 
     /**
-     * Load employees from API and local database.
+     * Load employees from API or local database.
      */
     private void loadEmployeeData() {
         // Load from API first
