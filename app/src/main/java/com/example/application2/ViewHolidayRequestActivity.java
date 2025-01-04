@@ -85,11 +85,29 @@ public class ViewHolidayRequestActivity extends AppCompatActivity {
     private void updateRequestStatus(HolidayRequestStatus status) {
         int rowsUpdated = dbHelper.updateHolidayRequestStatus(requestId, status.name());
         if (rowsUpdated > 0) {
+            // Fetch the request details to get the employee's email
+            HolidayRequest request = dbHelper.getHolidayRequestById(requestId);
+            if (request != null) {
+                // Send notification to the employee
+                sendNotificationToEmployee(request.getEmployeeName(), status);
+            }
             Toast.makeText(this, "Request " + status.name() + " successfully", Toast.LENGTH_SHORT).show();
             navigateToStatusActivity(status);
         } else {
             Toast.makeText(this, "Failed to update request status", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /**
+     * Send a notification to the employee about their holiday request status.
+     *
+     * @param employeeName The name of the employee.
+     * @param status       The new status of the holiday request.
+     */
+    private void sendNotificationToEmployee(String employeeName, HolidayRequestStatus status) {
+        String title = "Holiday Request Status Updated";
+        String message = "Your holiday request has been " + status.name().toLowerCase() + ".";
+        dbHelper.storeNotification(title, message, employeeName);
     }
 
     /**

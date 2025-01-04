@@ -196,6 +196,10 @@
     <string name="employee_id_number">ID number: 5786</string>
     <string name="leaves">Leaves</string>
     <string name="random_leaves">10</string>
+    <string name="salary_placeholder">50000.00</string>
+    <string name="start_date_placeholder">2023–01-05</string>
+
+
 
 
 

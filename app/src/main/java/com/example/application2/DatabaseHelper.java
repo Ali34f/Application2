@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.application2.model.Employee;
+import com.example.application2.model.Notification;
+import com.example.application2.model.AdminNotification;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +23,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database constants
     private static final String DATABASE_NAME = "employees.db";
-    private static final int DATABASE_VERSION = 9;
+    private static final int DATABASE_VERSION = 11;
 
     // Table Name and Columns
     private static final String TABLE_EMPLOYEES = "employees";
@@ -32,9 +35,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SALARY = "salary";
     private static final String COLUMN_START_DATE = "start_date";
     private static final String COLUMN_PASSWORD = "password";
-
     private static final String COLUMN_LEAVES = "leaves";
-
 
     // Table Name and Columns for Admins
     private static final String TABLE_ADMINS = "admins";
@@ -42,7 +43,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ADMIN_USERNAME = "username";
     private static final String COLUMN_ADMIN_PASSWORD = "password";
 
-
+    // Columns for Notifications Table
+    private static final String TABLE_NOTIFICATIONS = "notifications";
+    private static final String COLUMN_NOTIFICATION_ID = "notification_id";
+    private static final String COLUMN_TITLE = "title";
+    private static final String COLUMN_MESSAGE = "message";
+    private static final String COLUMN_RECIPIENT = "recipient";
+    private static final String COLUMN_READ_STATUS = "read_status";
 
     // Holiday Requests Table Name and Columns
     private static final String TABLE_HOLIDAY_REQUESTS = "holiday_requests";
@@ -54,8 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_ADDITIONAL_INFO = "additional_info";
     private static final String COLUMN_STATUS = "status";
 
-
-    // SQL statement to create the employees table
+    // SQL statements to create tables
     private static final String CREATE_TABLE_EMPLOYEES =
             "CREATE TABLE " + TABLE_EMPLOYEES + " (" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -68,8 +74,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_PASSWORD + " TEXT NOT NULL, " +
                     COLUMN_LEAVES + " INTEGER DEFAULT 0)";
 
-
-    // SQL statement to create the holiday requests table
     private static final String CREATE_TABLE_HOLIDAY_REQUESTS =
             "CREATE TABLE " + TABLE_HOLIDAY_REQUESTS + " (" +
                     COLUMN_REQUEST_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -80,15 +84,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_REASON + " TEXT NOT NULL, " +
                     COLUMN_STATUS + " TEXT NOT NULL)";
 
-
-    // SQL statement to create the admins table
     private static final String CREATE_TABLE_ADMINS =
             "CREATE TABLE " + TABLE_ADMINS + " (" +
                     COLUMN_ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     COLUMN_ADMIN_USERNAME + " TEXT UNIQUE NOT NULL, " +
                     COLUMN_ADMIN_PASSWORD + " TEXT NOT NULL)";
 
-
+    private static final String CREATE_TABLE_NOTIFICATIONS =
+            "CREATE TABLE " + TABLE_NOTIFICATIONS + " (" +
+                    COLUMN_NOTIFICATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_TITLE + " TEXT NOT NULL, " +
+                    COLUMN_MESSAGE + " TEXT NOT NULL, " +
+                    COLUMN_RECIPIENT + " TEXT NOT NULL, " +
+                    COLUMN_READ_STATUS + " TEXT DEFAULT 'unread')";
 
     private static final String TAG = "DatabaseHelper";
 
@@ -96,14 +104,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(CREATE_TABLE_EMPLOYEES);
             db.execSQL(CREATE_TABLE_ADMINS);
-            ensureDefaultAdminCredentials(db); // Add default admin credentials
+            db.execSQL(CREATE_TABLE_HOLIDAY_REQUESTS);
+            db.execSQL(CREATE_TABLE_NOTIFICATIONS);
+            ensureDefaultAdminCredentials(db);
             Log.d(TAG, "Database created successfully.");
         } catch (SQLException e) {
             Log.e(TAG, "Error creating database: " + e.getMessage());
@@ -115,6 +123,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_EMPLOYEES);
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADMINS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_HOLIDAY_REQUESTS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATIONS);
             onCreate(db);
             Log.d(TAG, "Database upgraded successfully.");
         } catch (SQLException e) {
@@ -122,11 +132,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    /**
-     * Ensures that default admin credentials exist in the database.
-     *
-     * @param db The writable database instance.
-     */
     private void ensureDefaultAdminCredentials(SQLiteDatabase db) {
         Cursor cursor = null;
         try {
@@ -146,6 +151,123 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if (cursor != null) cursor.close();
         }
     }
+
+    // ========================= Notification Management =========================
+
+    public void storeNotification(String title, String message, String recipient) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_TITLE, title);
+        values.put(COLUMN_MESSAGE, message);
+        values.put(COLUMN_RECIPIENT, recipient);
+        db.insert(TABLE_NOTIFICATIONS, null, values);
+        db.close();
+    }
+
+    public List<Notification> getUnreadNotifications(String recipient) {
+        List<Notification> notifications = new ArrayList<>();
+        if (recipient == null || recipient.isEmpty()) {
+            Log.e(TAG, "Invalid recipient for notifications");
+            return notifications;
+        }
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(
+                    "SELECT * FROM " + TABLE_NOTIFICATIONS + " WHERE " + COLUMN_RECIPIENT + " = ? AND " +
+                            COLUMN_READ_STATUS + " = 'unread'", new String[]{recipient});
+
+            while (cursor.moveToNext()) {
+                notifications.add(new Notification(
+                        cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_NOTIFICATION_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MESSAGE))
+                ));
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "Error retrieving unread notifications: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return notifications;
+    }
+
+    public void markNotificationAsRead(int notificationId) {
+        if (notificationId <= 0) {
+            Log.w(TAG, "Invalid notification ID: " + notificationId);
+            return;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_READ_STATUS, "read");
+        db.update(TABLE_NOTIFICATIONS, values, COLUMN_NOTIFICATION_ID + " = ?", new String[]{String.valueOf(notificationId)});
+        db.close();
+    }
+
+    public void markAllNotificationsAsRead(String recipient) {
+        if (recipient == null || recipient.isEmpty()) {
+            Log.w(TAG, "Invalid recipient for marking notifications as read");
+            return;
+        }
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(COLUMN_READ_STATUS, "read");
+            int rowsUpdated = db.update(TABLE_NOTIFICATIONS, values, COLUMN_RECIPIENT + " = ?", new String[]{recipient});
+            Log.d(TAG, "Notifications marked as read for recipient: " + recipient + " (" + rowsUpdated + " updated)");
+        } catch (SQLException e) {
+            Log.e(TAG, "Error marking notifications as read: " + e.getMessage());
+        } finally {
+            db.close();
+        }
+
+    }
+
+    /**
+     * Retrieve all unread notifications for the admin.
+     *
+     * @return A list of unread admin notifications.
+     */
+    public List<AdminNotification> getUnreadAdminNotifications() {
+        List<AdminNotification> notifications = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        try {
+            cursor = db.rawQuery(
+                    "SELECT * FROM " + TABLE_NOTIFICATIONS +
+                            " WHERE " + COLUMN_RECIPIENT + " = 'admin' AND " + COLUMN_READ_STATUS + " = 'unread'", null);
+
+            while (cursor != null && cursor.moveToNext()) {
+                notifications.add(new AdminNotification(
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TITLE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MESSAGE)),
+                        false, // Default to unread since the query filters only unread notifications
+                        System.currentTimeMillis() // Replace with a timestamp if stored in the DB
+                ));
+            }
+            Log.d(TAG, "Unread admin notifications fetched successfully.");
+        } catch (SQLException e) {
+            Log.e(TAG, "Error fetching unread admin notifications: " + e.getMessage());
+        } finally {
+            if (cursor != null) cursor.close();
+            db.close();
+        }
+
+        return notifications;
+    }
+
+
+
+
+// ========================= Login and Reset Management =========================
+
 
     /**
      * Validate admin login credentials.
@@ -174,6 +296,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.close();
         }
     }
+
+
 
 
     /**
@@ -239,6 +363,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return isUpdated;
     }
+
+    // ========================= CRUD operation in Database Management =========================
 
     /**
      * Search for employees by name or email.
@@ -454,10 +580,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return values;
     }
 
+
     // ========================= Holiday Request Management =========================
 
     /**
      * Add a new holiday request to the database.
+     *
+     * @param holidayRequest The HolidayRequest object containing the request details.
+     * @return The row ID of the newly inserted row, or -1 if an error occurred.
      */
     public long addHolidayRequest(HolidayRequest holidayRequest) {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
@@ -467,17 +597,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(COLUMN_END_DATE, holidayRequest.getEndDate());
             values.put(COLUMN_REASON, holidayRequest.getReason());
             values.put(COLUMN_ADDITIONAL_INFO, holidayRequest.getAdditionalInfo());
-            values.put(COLUMN_STATUS, holidayRequest.getStatus().name());
+            values.put(COLUMN_STATUS, HolidayRequestStatus.PENDING.name()); // Use enum's case
 
             long result = db.insertOrThrow(TABLE_HOLIDAY_REQUESTS, null, values);
-            Log.d(TAG, "Holiday request added successfully for employee: " + holidayRequest.getEmployeeName());
+
+            if (result != -1) {
+                // Notify the admin
+                storeNotification(
+                        "New Holiday Request",
+                        "A new holiday request has been submitted by " + holidayRequest.getEmployeeName() + ".",
+                        "admin"
+                );
+
+
+                Log.d(TAG, "Holiday request added successfully for employee: " + holidayRequest.getEmployeeName());
+            }
+
             return result;
         } catch (SQLException e) {
             Log.e(TAG, "Error adding holiday request: " + e.getMessage());
             return -1;
         }
     }
-
 
     /**
      * Retrieve all holiday requests from the database.
@@ -500,7 +641,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
-                        HolidayRequestStatus.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
+                        parseHolidayRequestStatus(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
                 ));
             }
             Log.d(TAG, "All holiday requests fetched successfully.");
@@ -515,7 +656,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Retrieve a specific holiday request by ID.
+     * Retrieve a specific holiday request by its ID.
+     *
+     * @param id The ID of the holiday request.
+     * @return The HolidayRequest object, or null if not found.
      */
     public HolidayRequest getHolidayRequestById(int id) {
         try (SQLiteDatabase db = this.getReadableDatabase();
@@ -530,7 +674,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_END_DATE)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REASON)),
                         cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDITIONAL_INFO)),
-                        HolidayRequestStatus.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
+                        parseHolidayRequestStatus(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_STATUS)))
                 );
             }
         } catch (SQLException e) {
@@ -541,6 +685,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Update the status of a holiday request.
+     *
+     * @param requestId The ID of the holiday request.
+     * @param newStatus The new status to set (e.g., "APPROVED" or "REJECTED").
+     * @return The number of rows updated.
      */
     public int updateHolidayRequestStatus(int requestId, String newStatus) {
         try (SQLiteDatabase db = this.getWritableDatabase()) {
@@ -555,6 +703,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return 0;
         }
     }
+
+    /**
+     * Helper method to parse a status value from the database into a HolidayRequestStatus enum.
+     *
+     * @param statusValue The status value as a string.
+     * @return The corresponding HolidayRequestStatus enum, or PENDING if invalid.
+     */
+    private HolidayRequestStatus parseHolidayRequestStatus(String statusValue) {
+        try {
+            return HolidayRequestStatus.valueOf(statusValue.toUpperCase()); // Normalize to uppercase
+        } catch (IllegalArgumentException | NullPointerException e) {
+            // Log invalid status and default to PENDING
+            Log.e(TAG, "Invalid status value: " + statusValue + ". Defaulting to PENDING.");
+            return HolidayRequestStatus.PENDING;
+        }
+    }
+
+    // ========================= Employee Login Management =========================
+
 
     /**
      * Validates employee login credentials.

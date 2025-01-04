@@ -50,181 +50,221 @@
         android:textStyle="bold"
         android:textColor="@android:color/black" />
 
-    <!-- Content Section -->
-    <LinearLayout
-        android:id="@+id/contentSection"
+    <!-- Scroll View for Content -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_below="@id/titleBelowBack">
+        android:layout_below="@id/titleBelowBack"
+        android:fillViewport="true">
 
-        <!-- Name -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/name"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:id="@+id/editName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="name"
-            android:hint="@string/hamza_al_biruni"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Position -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/position"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:id="@+id/editPosition"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="jobTitle"
-            android:hint="@string/data_analyst"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textPersonName"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Department -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/id"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:id="@+id/editID"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="organizationName"
-            android:hint="@string/id_number"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="text"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Phone Number -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_number"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:id="@+id/editPhoneNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="phone"
-            android:hint="@string/number"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="phone"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp" />
-
-        <!-- Email Address -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email_address"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-        <EditText
-            android:id="@+id/editEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autofillHints="emailAddress"
-            android:hint="HamzaAlBiruni@company.com"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textEmailAddress"
-            android:padding="12dp"
-            android:layout_marginBottom="16dp"
-            tools:ignore="HardcodedText" />
-
-        <!-- Leaves Field -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Leaves"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="4dp" />
-
-        <EditText
-            android:id="@+id/editLeaves"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/random_leaves"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="number"
-            android:padding="12dp"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="16dp" />
-
-
-        <!-- Footer Buttons -->
         <LinearLayout
-            android:id="@+id/footerLayout"
-            style="?android:attr/buttonBarStyle"
+            android:id="@+id/contentSection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="16dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <!-- Cancel Button -->
-            <Button
-                android:id="@+id/btnCancel"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
+            <!-- Name -->
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button_cancel"
-                android:text="@string/cancel_edits"
-                android:textSize="18sp"
+                android:text="@string/name"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@android:color/black"
-                android:padding="12dp"
-                android:layout_marginEnd="8dp"
-                android:textAllCaps="false"/>
-
-            <Button
-                android:id="@+id/btnConfirm"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="0dp"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/rounded_button_confirm"
-                android:text="@string/confirm_edits"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/white"
+                android:autofillHints="name"
+                android:hint="@string/hamza_al_biruni"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textPersonName"
                 android:padding="12dp"
-                android:layout_marginStart="8dp"
-                android:textAllCaps="false"/>
+                android:layout_marginBottom="16dp" />
 
+            <!-- Position -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/position"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editPosition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="jobTitle"
+                android:hint="@string/data_analyst"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textPersonName"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
 
+            <!-- ID Number -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/id"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="organizationName"
+                android:hint="@string/id_number"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="text"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Phone Number -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_number"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="phone"
+                android:hint="@string/number"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="phone"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Email Address -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email_address"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="emailAddress"
+                android:hint="HamzaAlBiruni@company.com"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp"
+                tools:ignore="HardcodedText" />
+
+            <!-- Salary -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/salary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editSalary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/salary_placeholder"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="numberDecimal"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Joining Date -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/beginning_date"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/start_date_placeholder"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="date"
+                android:padding="12dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Leaves Field -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leaves"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="4dp" />
+            <EditText
+                android:id="@+id/editLeaves"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/random_leaves"
+                android:background="@drawable/rounded_edittext"
+                android:inputType="number"
+                android:padding="12dp"
+                android:textColor="@android:color/black"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Footer Buttons -->
+            <LinearLayout
+                android:id="@+id/footerLayout"
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="16dp">
+
+                <!-- Cancel Button -->
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_cancel"
+                    android:text="@string/cancel_edits"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:padding="12dp"
+                    android:layout_marginEnd="8dp"
+                    android:textAllCaps="false" />
+
+                <!-- Confirm Button -->
+                <Button
+                    android:id="@+id/btnConfirm"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_button_confirm"
+                    android:text="@string/confirm_edits"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:padding="12dp"
+                    android:layout_marginStart="8dp"
+                    android:textAllCaps="false" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>

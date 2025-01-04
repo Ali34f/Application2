@@ -8,6 +8,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.application2.model.Notification;
+import com.example.application2.utils.AppNotificationManager;
+
+import java.util.List;
+
 /**
  * Activity for employee login.
  */
@@ -67,6 +72,9 @@ public class EmployeeLoginActivity extends AppCompatActivity {
 
         // Validate the credentials
         if (validateCredentials(email, password)) {
+            // Retrieve and display notifications for the employee
+            displayNotifications(email);
+
             // Navigate to EmployeeDashboardActivity upon successful login
             navigateToDashboard(email);
         } else {
@@ -84,6 +92,29 @@ public class EmployeeLoginActivity extends AppCompatActivity {
      */
     private boolean validateCredentials(String email, String password) {
         return dbHelper.validateEmployeeLogin(email, password);
+    }
+
+    /**
+     * Retrieve and display notifications for the logged-in employee.
+     *
+     * @param email The email of the logged-in employee.
+     */
+    private void displayNotifications(String email) {
+        List<Notification> notifications = dbHelper.getUnreadNotifications(email);
+
+        for (Notification notification : notifications) {
+            AppNotificationManager notificationManager = new AppNotificationManager(this);
+            notificationManager.showNotification(
+                    notification.getId(),
+                    notification.getTitle(),
+                    notification.getMessage()
+            );
+        }
+
+        // Mark notifications as read in the database
+        for (Notification notification : notifications) {
+            dbHelper.markNotificationAsRead(notification.getId());
+        }
     }
 
     /**
@@ -105,7 +136,6 @@ public class EmployeeLoginActivity extends AppCompatActivity {
         Intent intent = new Intent(EmployeeLoginActivity.this, EmployeeRestActivity.class);
         startActivity(intent);
     }
-
 
     /**
      * Utility method to show toast messages.

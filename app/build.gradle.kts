@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation ("androidx.recyclerview:recyclerview:1.3.0")
+
 
     // Testing dependencies
     testImplementation(libs.junit)

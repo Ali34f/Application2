@@ -96,11 +96,10 @@
     <item name="employeePhone" type="id"/>
     <item name="employeeSalary" type="id"/>
     <item name="employeeStartDate" type="id"/>
-
-
-
-
-
+    <item name="etStartDate" type="id"/>
+    <item name="notificationMessage" type="id"/>
+    <item name="notificationTime" type="id"/>
+    <item name="unreadIndicator" type="id"/>
 
 
 </resources>

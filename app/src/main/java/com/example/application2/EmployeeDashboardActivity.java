@@ -1,13 +1,19 @@
 package com.example.application2;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.application2.model.Employee;
 
@@ -23,6 +29,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private Employee loggedInEmployee;
 
     private static final String TAG = "EmployeeDashboard";
+    private static final int NOTIFICATION_PERMISSION_REQUEST_CODE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +50,9 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
         // Set button click listeners
         setButtonListeners();
+
+        // Check and request notification permission
+        checkAndRequestNotificationPermission();
     }
 
     /**
@@ -111,5 +121,46 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
      */
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Check and request notification permission (for Android 13+).
+     */
+    private void checkAndRequestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_REQUEST_CODE
+                );
+            } else {
+                Log.d(TAG, "Notification permission already granted.");
+            }
+        } else {
+            Log.d(TAG, "Notification permission not required for this Android version.");
+        }
+    }
+
+    /**
+     * Handle the result of the notification permission request.
+     *
+     * @param requestCode  The request code for the permission.
+     * @param permissions  The requested permissions.
+     * @param grantResults The grant results for the corresponding permissions.
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == NOTIFICATION_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "Notification permission granted.");
+                showToast("Notification permission granted.");
+            } else {
+                Log.e(TAG, "Notification permission denied.");
+                showToast("Notification permission denied.");
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +21,8 @@ import retrofit2.Response;
 
 public class EditEmployeeActivity extends AppCompatActivity {
 
-    private EditText editName, editPosition, editPhoneNumber, editEmailAddress, editLeaves;
+    private TextView tvEmployeeId;
+    private EditText editName, editPosition, editPhoneNumber, editEmailAddress, editLeaves, editSalary, editStartDate;
     private Button btnCancel, btnConfirm;
     private ImageView btnBack;
     private int employeeId;
@@ -36,6 +38,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
         employeeId = getIntent().getIntExtra("EMPLOYEE_ID", -1);
 
         if (employeeId != -1) {
+            tvEmployeeId.setText(String.format("Employee ID: %d", employeeId)); // Display employee ID
             loadEmployeeDetails(employeeId);
         } else {
             showToast("Invalid employee ID");
@@ -46,11 +49,14 @@ public class EditEmployeeActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
+        tvEmployeeId = findViewById(R.id.editID);
         editName = findViewById(R.id.editName);
         editPosition = findViewById(R.id.editPosition);
         editPhoneNumber = findViewById(R.id.editPhoneNumber);
         editEmailAddress = findViewById(R.id.editEmailAddress);
         editLeaves = findViewById(R.id.editLeaves);
+        editSalary = findViewById(R.id.editSalary);
+        editStartDate = findViewById(R.id.editStartDate);
         btnCancel = findViewById(R.id.btnCancel);
         btnConfirm = findViewById(R.id.btnConfirm);
         btnBack = findViewById(R.id.btnBack);
@@ -85,11 +91,14 @@ public class EditEmployeeActivity extends AppCompatActivity {
     }
 
     private void populateEmployeeDetails(Employee employee) {
+        tvEmployeeId.setText(String.format("Employee ID: %d", employee.getId())); // Display employee ID
         editName.setText(employee.getName());
         editPosition.setText(employee.getPosition());
         editPhoneNumber.setText(employee.getPhone());
         editEmailAddress.setText(employee.getEmail());
         editLeaves.setText(String.valueOf(employee.getLeaves()));
+        editSalary.setText(String.valueOf(employee.getSalary()));
+        editStartDate.setText(employee.getStartDate());
     }
 
     private void updateEmployee() {
@@ -98,17 +107,21 @@ public class EditEmployeeActivity extends AppCompatActivity {
         String phone = editPhoneNumber.getText().toString().trim();
         String email = editEmailAddress.getText().toString().trim();
         String leavesText = editLeaves.getText().toString().trim();
+        String salaryText = editSalary.getText().toString().trim();
+        String startDate = editStartDate.getText().toString().trim();
 
-        if (name.isEmpty() || position.isEmpty() || phone.isEmpty() || email.isEmpty() || leavesText.isEmpty()) {
+        if (name.isEmpty() || position.isEmpty() || phone.isEmpty() || email.isEmpty() || leavesText.isEmpty() || salaryText.isEmpty() || startDate.isEmpty()) {
             showToast("Please fill in all fields");
             return;
         }
 
         int leaves;
+        double salary;
         try {
             leaves = Integer.parseInt(leavesText);
+            salary = Double.parseDouble(salaryText);
         } catch (NumberFormatException e) {
-            showToast("Invalid number of leaves");
+            showToast("Invalid number format");
             return;
         }
 
@@ -117,8 +130,8 @@ public class EditEmployeeActivity extends AppCompatActivity {
                 name.contains(" ") ? name.split(" ")[1] : "",
                 email,
                 position,
-                0.0, // Default salary for now
-                "",  // Empty joining date for now
+                salary,
+                startDate,
                 leaves
         );
 
