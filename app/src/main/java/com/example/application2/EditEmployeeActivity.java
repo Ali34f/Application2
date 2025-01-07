@@ -1,5 +1,6 @@
 package com.example.application2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -95,6 +96,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("DefaultLocale")
     private void populateEmployeeDetails(Employee employee) {
         tvEmployeeId.setText(String.format("Employee ID: %d", employee.getId())); // Display employee ID
         editName.setText(employee.getName());
@@ -138,7 +140,7 @@ public class EditEmployeeActivity extends AppCompatActivity {
 
         EmployeeApiModel updatedEmployee = new EmployeeApiModel(
                 name, // Full name
-                "", // No split
+                "", //
                 email,
                 position,
                 salary,
